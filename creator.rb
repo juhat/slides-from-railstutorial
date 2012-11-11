@@ -16,6 +16,10 @@ content = [
             {
                 title: "first slide",
                 selector: ":nth-child(259) .highlight"
+            },
+            {
+                title: "image slide",
+                selector: ":nth-child(165) img"
             }
         ]
     },
@@ -73,12 +77,22 @@ content = [
 
 result = ''
 
-for chapter in content
+content.each_with_index do |chapter, index|
   document = Nokogiri::HTML( open( chapter[:url] ) )
 
   for slide in chapter[:slides]
     if slide.has_key?(:selector)
-        html_content = document.css( slide[:selector] ).first
+        if document.css( slide[:selector] ).first.name == "img"
+            base_url = "http://ruby.railstutorial.org"
+            image_path = document.css( slide[:selector] ).first.attributes["src"].to_s
+            new_image_path = "images/#{ index }_#{ image_path.split('/').last }"
+            open(new_image_path, 'wb') do |file|
+              file << open( base_url + image_path ).read
+            end
+            html_content = "<img src=\"#{ new_image_path }\">\n"
+        else
+            html_content = document.css( slide[:selector] ).first
+        end
     elsif slide.has_key?(:content)
         html_content = slide[:content]
     end
