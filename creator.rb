@@ -100,7 +100,7 @@ content.each_with_index do |chapter, index|
 
     result += "<!-- Slide content for chapter #{ chapter[:url] } -->\n"
     result += "<div class=\"slide\">\n\n"
-    result += "<h1>#{ slide[:title] }</h1>\n\n"
+    result += "<h1>#{ slide[:title] }<span style='float:right; font-size:0.5em'>chapter #{ index + 1 }</span></h1>\n\n"
     result += "<div>#{ html_content }</div>\n"
     result += "</div>\n\n\n\n"
   end
