@@ -279,43 +279,48 @@ content = [
     }
 ]
 
-result = ''
+files = ""
 
 content.each_with_index do |chapter, index|
-  document = Nokogiri::HTML( open( chapter[:url] ) )
+  result = ''
+  current_file = "index_#{ index + 1 }.html"
 
-  for slide in chapter[:slides]
-    if slide.has_key?(:selector)
-        if document.css( slide[:selector] ).first.name == "img"
-            base_url = "http://ruby.railstutorial.org"
-            image_path = document.css( slide[:selector] ).first.attributes["src"].to_s
-            new_image_path = "images/#{ index }_#{ image_path.split('/').last }"
-            open(new_image_path, 'wb') do |file|
-              file << open( base_url + image_path ).read
-            end
-            html_content = "<img src=\"#{ new_image_path }\">\n"
-        else
-            html_content = document.css( slide[:selector] ).first
-            html_content.css("sup").each{|s| s.remove }
-            # how to safety remove?
-            html_content.css("a").select{|a| !a.attributes["href"].value.include?("http") }.each{|a| a.attributes["href"].value = "#" }
-        end
-    elsif slide.has_key?(:content)
-        html_content = slide[:content]
+  unless File.exist?( current_file )
+    document = Nokogiri::HTML( open( chapter[:url] ) )
+
+    for slide in chapter[:slides]
+      if slide.has_key?(:selector)
+          if document.css( slide[:selector] ).first.name == "img"
+              base_url = "http://ruby.railstutorial.org"
+              image_path = document.css( slide[:selector] ).first.attributes["src"].to_s
+              new_image_path = "images/#{ index }_#{ image_path.split('/').last }"
+              open(new_image_path, 'wb') do |file|
+                file << open( base_url + image_path ).read
+              end
+              html_content = "<img src=\"#{ new_image_path }\">\n"
+          else
+              html_content = document.css( slide[:selector] ).first
+              html_content.css("sup").each{|s| s.remove }
+              # how to safety remove?
+              html_content.css("a").select{|a| !a.attributes["href"].value.include?("http") }.each{|a| a.attributes["href"].value = "#" }
+          end
+      elsif slide.has_key?(:content)
+          html_content = slide[:content]
+      end
+
+      result += "<!-- Slide content for chapter #{ chapter[:url] } -->\n"
+      result += "<div class=\"slide\">\n\n"
+      result += "<h1>#{ slide[:title] }<span style='float:right; font-size:0.5em'> chapter #{ index + 1 }</span></h1>\n\n"
+      result += "<div>#{ html_content }</div>\n"
+      result += "</div>\n\n\n\n"
+
+      template = File.open( "blank.html" ).read
+      File.open( current_file, 'w' ) do |file|
+        file.write( template.gsub( "###-content-goes-here-###", result ) )
+      end
+      files += " " + current_file
     end
-
-
-    result += "<!-- Slide content for chapter #{ chapter[:url] } -->\n"
-    result += "<div class=\"slide\">\n\n"
-    result += "<h1>#{ slide[:title] }<span style='float:right; font-size:0.5em'> chapter #{ index + 1 }</span></h1>\n\n"
-    result += "<div>#{ html_content }</div>\n"
-    result += "</div>\n\n\n\n"
   end
 end
 
-template = File.open( "blank.html" ).read
-File.open( 'index.html', 'w' ) do |file|
-  file.write( template.gsub( "###-content-goes-here-###", result ) )
-end
-
-`open index.html`
+`open #{ files }`
