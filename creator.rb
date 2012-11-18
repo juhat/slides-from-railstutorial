@@ -71,11 +71,11 @@ content = [
             },
             {
                 title: "Heroku setup",
-                selector: ".codelisting pre"
+                selector: ":nth-child(343) pre"
             },
             {
                 title: "Creating the app",
-                selector: ".codelisting pre"
+                selector: ":nth-child(346) pre"
             },
             {
                 title: "Pushing the changes to live",
@@ -117,6 +117,14 @@ content = [
             {
                 title: "Adding remote for",
                 selector: ":nth-child(41) pre"
+            },
+            {
+                title: "Database model for the user",
+                selector: ":nth-child(48) img"
+            },
+            {
+                title: "Database model for microposts",
+                selector: ":nth-child(54) img"
             },
             {
                 title: "User resource",
@@ -229,12 +237,154 @@ content = [
             {
                 title: "Migrate in production",
                 selector: ":nth-child(198) pre"
+            },
+            {
+                title: "Summary",
+                content: "<p>Good: high level overview, MVC, REST, data modeling, live app in production</p><br/><p>Missing: not custom, no images, no user management, no security, not TDD, missing understanding</p>"
             }
         ]
     },
     {
         url: "http://ruby.railstutorial.org/chapters/static-pages",
         slides: [
+            {
+                title: "Mostly static pages",
+                selector: "p:nth-child(24)"
+            },
+            {
+                title: "Let's start a new app",
+                selector: ":nth-child(28) pre"
+            },
+            {
+                title: "The Gemfile",
+                selector: ":nth-child(32) pre"
+            },
+            {
+                title: "Rspec Rails gem",
+                selector: ":nth-child(40) pre"
+            },
+            {
+                title: "Git init, push",
+                selector: ":nth-child(52) pre"
+            },
+            {
+                title: "Heroku app",
+                selector: ":nth-child(55) pre"
+            },
+            {
+                title: "Deploy problems?",
+                selector: ":nth-child(59) pre"
+            },
+            {
+                title: "Truly static pages",
+                selector: ":nth-child(74) img"
+            },
+            {
+                title: "New branch",
+                selector: ":nth-child(93) pre"
+            },
+            {
+                title: "StaticPagesController",
+                selector: ":nth-child(98) pre"
+            },
+            {
+                title: "Undo is possible",
+                selector: ":nth-child(4) , :nth-child(98) pre"
+            },
+            {
+                title: "Even in the DB",
+                selector: ":nth-child(13)"
+            },
+            {
+                title: "Till the end",
+                selector: ":nth-child(15)"
+            },
+            {
+                title: "Routing for static pages",
+                selector: ":nth-child(111) pre"
+            },
+            {
+                title: "And the page",
+                selector: ":nth-child(116) img"
+            },
+            {
+                title: "HTTP verbs",
+                selector: "p:nth-child(3)"
+            },
+            {
+                title: "Controller",
+                selector: ":nth-child(121) pre"
+            },
+            {
+                title: "View",
+                selector: ":nth-child(128) pre"
+            },
+            {
+                title: "Commit time",
+                selector: ":nth-child(135) pre"
+            },
+            {
+                title: "TDD",
+                selector: "p:nth-child(139)"
+            },
+            {
+                title: "Generating a test",
+                selector: ":nth-child(146) pre"
+            },
+            {
+                title: "The first test",
+                selector: ":nth-child(149) pre"
+            },
+            {
+                title: "Run it!",
+                selector: ":nth-child(159) pre"
+            },
+            {
+                title: "The result",
+                selector: ":nth-child(162) img"
+            },
+            {
+                title: "How to pass?",
+                selector: ":nth-child(165) pre"
+            },
+            {
+                title: "More tests?",
+                selector: ":nth-child(175) pre"
+            },
+            {
+                title: "Let's add a page",
+                selector: ":nth-child(191) pre"
+            },
+            {
+                title: "New error",
+                selector: ":nth-child(198) pre"
+            },
+            {
+                title: "Adding a route",
+                selector: ":nth-child(201) pre"
+            },
+            {
+                title: "Another error",
+                selector: ":nth-child(205) pre"
+            },
+            {
+                title: "Adding action",
+                selector: ":nth-child(208) pre"
+            },
+            {
+                title: "Third error",
+                selector: ":nth-child(212) pre"
+            },
+            {
+                title: "View templage",
+                selector: ":nth-child(215) pre"
+            },
+            {
+                title: "Slightly dynamic pages",
+                selector: ""
+            },
+
+
         ]
     },
     {
