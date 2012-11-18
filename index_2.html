@@ -1,0 +1,817 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 1st November 2003), see www.w3.org" />
+<title>Ruby on Rails - 2012 Attila Juhász, Component Soft Ltd</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content=
+"Copyright &#169; 2005-2010 W3C (MIT, ERCIM, Keio)" />
+<meta name="duration" content="20" />
+<link rel="stylesheet" href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" type="text/css" />
+<script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js" charset="utf-8" type="text/javascript">
+</script>
+</head>
+<body>
+
+<div class="background">
+    <div class="footer" style="position: absolute; bottom: 0; padding: 1em 1em 2em 1em; font-size: 0.7em;">
+        <img src="assets/componentsoft.jpg" alt="" style="width: 40px; vertical-align: middle; margin: 0 1em 0 0" />
+        (c) 2012 Attila Juhász, Component Soft Ltd
+    </div>
+
+</div>
+
+<div class="slide cover title">
+    <h1>Ruby on Rails</h1>
+    <p>
+        <img src="assets/rails.png" alt="Ruby on Rails logo" height="100px" style="float:left; margin: 0.5em">
+        “Ruby on Rails is a breakthrough in lowering the barriers of entry to programming.
+        Powerful web applications that formerly might have taken weeks or months
+        to develop can be produced in a matter of days.”
+        <br /> -Tim O'Reilly, Founder of O'Reilly Media
+        <br />
+        <br />
+        <br />
+        <br />
+        <a href="http://appmaintainers.com">Attila Juhász</a>,
+        &lt;<a href="mailto:attila@appmaintainers.com">attila@appmaintainers.com</a>&gt;<br />
+        We are Rails guys.
+        We upgrade & maintain Ruby on Rails apps.
+        <br />
+        <br />
+        <a href="http://appmaintainers.com"><img src="assets/appmaintainers.png" alt="App Maintainers logo" height="100px"></a>
+    </p>
+</div>
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>The demo app<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><p>In this chapter, we’ll develop a simple demonstration application to show off some of the power of Rails. The purpose is to get a high-level overview of Ruby on Rails programming (and web development in general) by rapidly generating an application using <em>scaffold generators</em>. As discussed in <a class="ref" href="#">Box 1.1</a>, the rest of the book will take the opposite approach, developing a full application incrementally and explaining each new concept as it arises, but for a quick overview (and some instant gratification) there is no substitute for scaffolding. The resulting demo app will allow us to interact with it through its URIs, giving us insight into the structure of a Rails application, including a first example of the <em>REST architecture</em> favored by Rails.</p></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Creating the app<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> <span class="nb">cd</span> ~/rails_projects
+<span class="gp">$</span> rails new demo_app
+<span class="gp">$</span> <span class="nb">cd </span>demo_app
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>The Gemfile<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'3.2.9'</span>
+
+<span class="n">group</span> <span class="ss">:development</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">'sqlite3'</span><span class="p">,</span> <span class="s1">'1.3.5'</span>
+<span class="k">end</span>
+
+
+<span class="c1"># Gems used only for assets and not required</span>
+<span class="c1"># in production environments by default.</span>
+<span class="n">group</span> <span class="ss">:assets</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">'sass-rails'</span><span class="p">,</span>   <span class="s1">'3.2.5'</span>
+  <span class="n">gem</span> <span class="s1">'coffee-rails'</span><span class="p">,</span> <span class="s1">'3.2.2'</span>
+
+  <span class="n">gem</span> <span class="s1">'uglifier'</span><span class="p">,</span> <span class="s1">'1.2.3'</span>
+<span class="k">end</span>
+
+<span class="n">gem</span> <span class="s1">'jquery-rails'</span><span class="p">,</span> <span class="s1">'2.0.2'</span>
+
+<span class="n">group</span> <span class="ss">:production</span> <span class="k">do</span>
+  <span class="n">gem</span> <span class="s1">'pg'</span><span class="p">,</span> <span class="s1">'0.12.2'</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Bundle install<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> bundle install --without production
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Initial commit<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> git init
+<span class="gp">$</span> git add .
+<span class="gp">$</span> git commit -m <span class="s2">"Initial commit"</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Creating repo on Github<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_create_demo_repo_new.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Adding remote for<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> git remote add origin git@github.com:&lt;username&gt;/demo_app.git
+<span class="gp">$</span> git push -u origin master
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Database model for the user<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_demo_user_model.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Database model for microposts<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_demo_micropost_model.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>User resource<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><p>In this section, we’ll implement the users data model in <a class="ref" href="#">Section 2.1.1</a>, along with a web interface to that model.
+The combination will constitute a <em>Users resource</em>, which will allow us to think of users as objects that can be created, read, updated, and deleted through the web via the <a href="http://en.wikipedia.org/wiki/Hypertext_Transfer_Protocol">HTTP protocol</a>. As promised in the introduction, our Users resource will be created by a scaffold generator program, which comes standard with each Rails project. I urge you not to look too closely at the generated code; at this stage, it will only serve to confuse you.</p></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Generating the user<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre>$ rails generate scaffold User name:string email:string
+      invoke  active_record
+      create    db/migrate/20111123225336_create_users.rb
+      create    app/models/user.rb
+      invoke    test_unit
+      create      test/unit/user_test.rb
+      create      test/fixtures/users.yml
+       route  resources :users
+      invoke  scaffold_controller
+      create    app/controllers/users_controller.rb
+      invoke    erb
+      create      app/views/users
+      create      app/views/users/index.html.erb
+      create      app/views/users/edit.html.erb
+      create      app/views/users/show.html.erb
+      create      app/views/users/new.html.erb
+      create      app/views/users/_form.html.erb
+      invoke    test_unit
+      create      test/functional/users_controller_test.rb
+      invoke    helper
+      create      app/helpers/users_helper.rb
+      invoke      test_unit
+      create        test/unit/helpers/users_helper_test.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/users.js.coffee
+      invoke    scss
+      create      app/assets/stylesheets/users.css.scss
+      invoke  scss
+      create    app/assets/stylesheets/scaffolds.css.scss
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>DB migration<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> bundle <span class="nb">exec </span>rake db:migrate
+<span class="go">==  CreateUsers: migrating ====================================================</span>
+<span class="go">-- create_table(:users)</span>
+<span class="go">   -&gt; 0.0017s</span>
+<span class="go">==  CreateUsers: migrated (0.0018s) ===========================================</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>User URLs<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><div class="table">
+<div class="center">
+<table class="tabular">
+<tr>
+<th class="align_left"><strong>URI</strong></th>
+<th class="align_left"><strong>Action</strong></th>
+<th class="align_left"><strong>Purpose</strong></th>
+</tr>
+<tr class="top_bar">
+<td class="align_left"><a href="http://localhost:3000/users">/users</a></td>
+<td class="align_left"><code>index</code></td>
+<td class="align_left">page to list all users</td>
+</tr>
+<tr>
+<td class="align_left"><a href="http://localhost:3000/users/1">/users/1</a></td>
+<td class="align_left"><code>show</code></td>
+<td class="align_left">page to show user with id <code>1</code>
+</td>
+</tr>
+<tr>
+<td class="align_left"><a href="http://localhost:3000/users/new">/users/new</a></td>
+<td class="align_left"><code>new</code></td>
+<td class="align_left">page to make a new user</td>
+</tr>
+<tr>
+<td class="align_left"><a href="http://localhost:3000/users/1/edit">/users/1/edit</a></td>
+<td class="align_left"><code>edit</code></td>
+<td class="align_left">page to edit user with id <code>1</code>
+</td>
+</tr>
+</table>
+</div>
+<div class="caption">
+<span class="header">Table 2.1: </span><span class="description">The correspondence between pages and URIs for the Users resource.</span>
+</div>
+</div></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>User URLs<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_demo_new_user_rails_3.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>MVC<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_mvc_detailed.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>config/routes.rb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="ss">DemoApp::Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:users</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>app/controllers/users_controller.rb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">new</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">edit</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">update</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">destroy</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>User REST URLs<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><div class="center">
+<table class="tabular">
+<tr>
+<th class="align_left"><strong>HTTP request</strong></th>
+<th class="align_left"><strong>URI</strong></th>
+<th class="align_left"><strong>Action</strong></th>
+<th class="align_left"><strong>Purpose</strong></th>
+</tr>
+<tr class="top_bar">
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/users</td>
+<td class="align_left"><code>index</code></td>
+<td class="align_left">page to list all users</td>
+</tr>
+<tr>
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/users/1</td>
+<td class="align_left"><code>show</code></td>
+<td class="align_left">page to show user with id <code>1</code>
+</td>
+</tr>
+<tr>
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/users/new</td>
+<td class="align_left"><code>new</code></td>
+<td class="align_left">page to make a new user</td>
+</tr>
+<tr>
+<td class="align_left"><tt>POST</tt></td>
+<td class="align_left">/users</td>
+<td class="align_left"><code>create</code></td>
+<td class="align_left">create a new user</td>
+</tr>
+<tr>
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/users/1/edit</td>
+<td class="align_left"><code>edit</code></td>
+<td class="align_left">page to edit user with id <code>1</code>
+</td>
+</tr>
+<tr>
+<td class="align_left"><tt>PUT</tt></td>
+<td class="align_left">/users/1</td>
+<td class="align_left"><code>update</code></td>
+<td class="align_left">update user with id <code>1</code>
+</td>
+</tr>
+<tr>
+<td class="align_left"><tt>DELETE</tt></td>
+<td class="align_left">/users/1</td>
+<td class="align_left"><code>destroy</code></td>
+<td class="align_left">delete user with id <code>1</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>What is REST?<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><div class="sidebar">
+<span class="title"><span class="header">Box 2.2.</span><span class="description">REpresentational State Transfer (REST)</span></span>
+<p>If you read much about Ruby on Rails web development, you’ll see a lot of references to “REST”, which is an acronym for REpresentational State Transfer. REST is an architectural style for developing distributed, networked systems and software applications such as the World Wide Web and web applications. Although REST theory is rather abstract, in the context of Rails applications REST means that most application components (such as users and microposts) are modeled as <em>resources</em> that can be created, read, updated, and deleted—operations that correspond both to the <a href="http://en.wikipedia.org/wiki/Create,_read,_update_and_delete">CRUD operations of relational databases</a> and the four fundamental <a href="http://en.wikipedia.org/wiki/HTTP_request#Request_methods">HTTP request methods</a>: <tt>POST</tt>, <tt>GET</tt>, <tt>PUT</tt>, and <tt>DELETE</tt>. (We’ll learn more about HTTP requests in <a class="ref" href="#">Section 3.2.1</a> and especially <a class="ref" href="#">Box 3.2</a>.)</p>
+
+<p>As a Rails application developer, the RESTful style of development helps you make choices about which controllers and actions to write: you simply structure the application using resources that get created, read, updated, and deleted. In the case of users and microposts, this process is straightforward, since they are naturally resources in their own right. In <a class="ref" href="#">Chapter 11</a>, we’ll see an example where REST principles allow us to model a subtler problem, “following users”, in a natural and convenient way.</p>
+</div></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>User C, app/controllers/users_controller.rb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">index</span>
+    <span class="vi">@users</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">all</span>
+  <span class="k">end</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>User M, app/models/user.rb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>User C, app/views/users/index.html.erb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="nt">&lt;h1&gt;</span>Listing users<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;table&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Name<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;</span>Email<span class="nt">&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+    <span class="nt">&lt;th&gt;&lt;/th&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+
+<span class="cp">&lt;%</span> <span class="vi">@users</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">user</span><span class="o">|</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;tr&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Show'</span><span class="p">,</span> <span class="n">user</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Edit'</span><span class="p">,</span> <span class="n">edit_user_path</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+    <span class="nt">&lt;td&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'Destroy'</span><span class="p">,</span> <span class="n">user</span><span class="p">,</span> <span class="nb">method</span><span class="p">:</span> <span class="ss">:delete</span><span class="p">,</span>
+                                     <span class="ss">data:</span> <span class="p">{</span> <span class="ss">confirm:</span> <span class="s1">'Are you sure?'</span> <span class="p">}</span> <span class="cp">%&gt;</span><span class="nt">&lt;/td&gt;</span>
+  <span class="nt">&lt;/tr&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;/table&gt;</span>
+
+<span class="nt">&lt;br</span> <span class="nt">/&gt;</span>
+
+<span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s1">'New User'</span><span class="p">,</span> <span class="n">new_user_path</span> <span class="cp">%&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Generating the micropost<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre>$ rails generate scaffold Micropost content:string user_id:integer
+      invoke  active_record
+      create    db/migrate/20111123225811_create_microposts.rb
+      create    app/models/micropost.rb
+      invoke    test_unit
+      create      test/unit/micropost_test.rb
+      create      test/fixtures/microposts.yml
+       route  resources :microposts
+      invoke  scaffold_controller
+      create    app/controllers/microposts_controller.rb
+      invoke    erb
+      create      app/views/microposts
+      create      app/views/microposts/index.html.erb
+      create      app/views/microposts/edit.html.erb
+      create      app/views/microposts/show.html.erb
+      create      app/views/microposts/new.html.erb
+      create      app/views/microposts/_form.html.erb
+      invoke    test_unit
+      create      test/functional/microposts_controller_test.rb
+      invoke    helper
+      create      app/helpers/microposts_helper.rb
+      invoke      test_unit
+      create        test/unit/helpers/microposts_helper_test.rb
+      invoke  assets
+      invoke    coffee
+      create      app/assets/javascripts/microposts.js.coffee
+      invoke    scss
+      create      app/assets/stylesheets/microposts.css.scss
+      invoke  scss
+   identical    app/assets/stylesheets/scaffolds.css.scss
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>config/routes.rb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="ss">DemoApp::Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">resources</span> <span class="ss">:microposts</span>
+  <span class="n">resources</span> <span class="ss">:users</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Micropost REST URLs<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><div class="center">
+<table class="tabular">
+<tr>
+<th class="align_left"><strong>HTTP request</strong></th>
+<th class="align_left"><strong>URI</strong></th>
+<th class="align_left"><strong>Action</strong></th>
+<th class="align_left"><strong>Purpose</strong></th>
+</tr>
+<tr class="top_bar">
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/microposts</td>
+<td class="align_left"><code>index</code></td>
+<td class="align_left">page to list all microposts</td>
+</tr>
+<tr>
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/microposts/1</td>
+<td class="align_left"><code>show</code></td>
+<td class="align_left">page to show micropost with id <code>1</code>
+</td>
+</tr>
+<tr>
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/microposts/new</td>
+<td class="align_left"><code>new</code></td>
+<td class="align_left">page to make a new micropost</td>
+</tr>
+<tr>
+<td class="align_left"><tt>POST</tt></td>
+<td class="align_left">/microposts</td>
+<td class="align_left"><code>create</code></td>
+<td class="align_left">create a new micropost</td>
+</tr>
+<tr>
+<td class="align_left"><tt>GET</tt></td>
+<td class="align_left">/microposts/1/edit</td>
+<td class="align_left"><code>edit</code></td>
+<td class="align_left">page to edit micropost with id <code>1</code>
+</td>
+</tr>
+<tr>
+<td class="align_left"><tt>PUT</tt></td>
+<td class="align_left">/microposts/1</td>
+<td class="align_left"><code>update</code></td>
+<td class="align_left">update micropost with id <code>1</code>
+</td>
+</tr>
+<tr>
+<td class="align_left"><tt>DELETE</tt></td>
+<td class="align_left">/microposts/1</td>
+<td class="align_left"><code>destroy</code></td>
+<td class="align_left">delete micropost with id <code>1</code>
+</td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Adding the micro<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">Micropost</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:user_id</span>
+  <span class="n">validates</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:length</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:maximum</span> <span class="o">=&gt;</span> <span class="mi">140</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>It shows the error<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_micropost_length_error_rails_3.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Assotiation User <=> Micropost<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><p>One of the most powerful features of Rails is the ability to form <em>associations</em> between different data models. In the case of our User model, each user potentially has many microposts. We can express this in code by updating the User and Micropost models as in <a class="ref" href="#">Listing 2.10</a> and <a class="ref" href="#">Listing 2.11</a>.</p></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>DB<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_micropost_user_association.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>app/models/user.rb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">User</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:email</span><span class="p">,</span> <span class="ss">:name</span>
+  <span class="n">has_many</span> <span class="ss">:microposts</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>app/models/micropost.rb<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">Micropost</span> <span class="o">&lt;</span> <span class="ss">ActiveRecord::Base</span>
+  <span class="n">attr_accessible</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:user_id</span>
+
+  <span class="n">belongs_to</span> <span class="ss">:user</span>
+
+  <span class="n">validates</span> <span class="ss">:content</span><span class="p">,</span> <span class="ss">:length</span> <span class="o">=&gt;</span> <span class="p">{</span> <span class="ss">:maximum</span> <span class="o">=&gt;</span> <span class="mi">140</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>rails console --sandbox<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="go">$ rails console</span>
+<span class="gp">&gt;&gt; </span><span class="n">first_user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">first</span>
+<span class="go">=&gt; #&lt;User id: 1, name: "Michael Hartl", email: "michael@example.org",</span>
+<span class="go">created_at: "2011-11-03 02:01:31", updated_at: "2011-11-03 02:01:31"&gt;</span>
+<span class="gp">&gt;&gt; </span><span class="n">first_user</span><span class="o">.</span><span class="n">microposts</span>
+<span class="go">=&gt; [#&lt;Micropost id: 1, content: "First micropost!", user_id: 1, created_at:</span>
+<span class="go">"2011-11-03 02:37:37", updated_at: "2011-11-03 02:37:37"&gt;, #&lt;Micropost id: 2,</span>
+<span class="go">content: "Second micropost", user_id: 1, created_at: "2011-11-03 02:38:54",</span>
+<span class="go">updated_at: "2011-11-03 02:38:54"&gt;]</span>
+<span class="gp">&gt;&gt; </span><span class="nb">exit</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Where is the ActiveRecord?<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_demo_model_inheritance.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Where is the ActionController?<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><img src="images/1_demo_controller_inheritance.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Commit<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> git add .
+<span class="gp">$</span> git commit -m <span class="s2">"Finish demo app"</span>
+<span class="gp">$</span> git push
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Creating a Heroku app<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> heroku create --stack cedar
+<span class="gp">$</span> git push heroku master
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Migrate in production<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><pre><span class="gp">$</span> heroku run rake db:migrate
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/a-demo-app -->
+<div class="slide">
+
+<h1>Summary<span style='float:right; font-size:0.5em'> chapter 2</span></h1>
+
+<div><p>Good: high level overview, MVC, REST, data modeling, live app in production</p><br/><p>Missing: not custom, no images, no user management, no security, not TDD, missing understanding</p></div>
+</div>
+
+
+
+
+
+</body>
+</html>

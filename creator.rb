@@ -289,15 +289,15 @@ content = [
             },
             {
                 title: "Undo is possible",
-                selector: ":nth-child(4) , :nth-child(98) pre"
+                content: "<p>$ rails generate controller FooBars baz quux <br/>$ rails destroy  controller FooBars baz quux</p>"
             },
             {
                 title: "Even in the DB",
-                selector: ":nth-child(13)"
+                content: "<p>$ rake db:rollback</p>"
             },
             {
                 title: "Till the end",
-                selector: ":nth-child(15)"
+                content: "<p>$ rake db:migrate VERSION=0</p>"
             },
             {
                 title: "Routing for static pages",
@@ -309,7 +309,7 @@ content = [
             },
             {
                 title: "HTTP verbs",
-                selector: "p:nth-child(3)"
+                content: "<p><tt>GET</tt> is the most common HTTP operation, used for <em>reading</em> data on the web; it just means \"get a page\", and every time you visit a site like google.com or wikipedia.org your browser is submitting a <tt>GET</tt> request. <tt>POST</tt> is the next most common operation; it is the request sent by your browser when you submit a form. In Rails applications, <tt>POST</tt> requests are typically used for <em>creating</em> things (although HTTP also allows <tt>POST</tt> to perform updates); for example, the <tt>POST</tt> request sent when you submit a registration form creates a new user on the remote site. The other two verbs, <tt>PUT</tt> and <tt>DELETE</tt>, are designed for <em>updating</em> and <em>destroying</em> things on the remote server. These requests are less common than <tt>GET</tt> and <tt>POST</tt> since browsers are incapable of sending them natively, but some web frameworks (including Ruby on Rails) have clever ways of making it <em>seem</em> like browsers are issuing such requests.</p>"
             },
             {
                 title: "Controller",
@@ -376,15 +376,37 @@ content = [
                 selector: ":nth-child(212) pre"
             },
             {
-                title: "View templage",
+                title: "View template",
                 selector: ":nth-child(215) pre"
             },
             {
                 title: "Slightly dynamic pages",
-                selector: ""
+                selector: ".table .center"
             },
-
-
+            {
+                title: "Testing title",
+                selector: ":nth-child(250) pre"
+            },
+            {
+                title: "Passing title test",
+                selector: ":nth-child(259) pre"
+            },
+            {
+                title: "Refactor",
+                selector: ":nth-child(275) pre"
+            },
+            {
+                title: "Use layout!",
+                selector: ":nth-child(299) pre"
+            },
+            {
+                title: "Home page now",
+                selector: ":nth-child(308) pre"
+            },
+            {
+                title: "Summary",
+                selector: "p:nth-child(317)"
+            }
         ]
     },
     {
@@ -439,36 +461,41 @@ content.each_with_index do |chapter, index|
     document = Nokogiri::HTML( open( chapter[:url] ) )
 
     for slide in chapter[:slides]
-      if slide.has_key?(:selector)
-          if document.css( slide[:selector] ).first.name == "img"
-              base_url = "http://ruby.railstutorial.org"
-              image_path = document.css( slide[:selector] ).first.attributes["src"].to_s
-              new_image_path = "images/#{ index }_#{ image_path.split('/').last }"
-              open(new_image_path, 'wb') do |file|
-                file << open( base_url + image_path ).read
-              end
-              html_content = "<img src=\"#{ new_image_path }\">\n"
-          else
-              html_content = document.css( slide[:selector] ).first
-              html_content.css("sup").each{|s| s.remove }
-              # how to safety remove?
-              html_content.css("a").select{|a| !a.attributes["href"].value.include?("http") }.each{|a| a.attributes["href"].value = "#" }
-          end
-      elsif slide.has_key?(:content)
-          html_content = slide[:content]
-      end
+      begin
+        if slide.has_key?(:selector)
+            if document.css( slide[:selector] ).first.name == "img"
+                base_url = "http://ruby.railstutorial.org"
+                image_path = document.css( slide[:selector] ).first.attributes["src"].to_s
+                new_image_path = "images/#{ index }_#{ image_path.split('/').last }"
+                open(new_image_path, 'wb') do |file|
+                  file << open( base_url + image_path ).read
+                end
+                html_content = "<img src=\"#{ new_image_path }\">\n"
+            else
+                html_content = document.css( slide[:selector] ).first
+                html_content.css("sup").each{|s| s.remove }
+                # how to safety remove?
+                html_content.css("a").select{|a| !a.attributes["href"].value.include?("http") }.each{|a| a.attributes["href"].value = "#" }
+            end
+        elsif slide.has_key?(:content)
+            html_content = slide[:content]
+        end
 
-      result += "<!-- Slide content for chapter #{ chapter[:url] } -->\n"
-      result += "<div class=\"slide\">\n\n"
-      result += "<h1>#{ slide[:title] }<span style='float:right; font-size:0.5em'> chapter #{ index + 1 }</span></h1>\n\n"
-      result += "<div>#{ html_content }</div>\n"
-      result += "</div>\n\n\n\n"
+        result += "<!-- Slide content for chapter #{ chapter[:url] } -->\n"
+        result += "<div class=\"slide\">\n\n"
+        result += "<h1>#{ slide[:title] }<span style='float:right; font-size:0.5em'> chapter #{ index + 1 }</span></h1>\n\n"
+        result += "<div>#{ html_content }</div>\n"
+        result += "</div>\n\n\n\n"
 
-      template = File.open( "blank.html" ).read
-      File.open( current_file, 'w' ) do |file|
-        file.write( template.gsub( "###-content-goes-here-###", result ) )
+        template = File.open( "blank.html" ).read
+        File.open( current_file, 'w' ) do |file|
+          file.write( template.gsub( "###-content-goes-here-###", result ) )
+        end
+        files += " " + current_file
+      rescue => e
+         puts slide
+         puts e
       end
-      files += " " + current_file
     end
   end
 end
