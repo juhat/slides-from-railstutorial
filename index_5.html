@@ -1,0 +1,956 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 1st November 2003), see www.w3.org" />
+<title>Ruby on Rails - 2012 Attila Juhász, Component Soft Ltd</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content=
+"Copyright &#169; 2005-2010 W3C (MIT, ERCIM, Keio)" />
+<meta name="duration" content="20" />
+<link rel="stylesheet" href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" type="text/css" />
+<script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js" charset="utf-8" type="text/javascript">
+</script>
+</head>
+<body>
+
+<div class="background">
+    <div class="footer" style="position: absolute; bottom: 0; padding: 1em 1em 2em 1em; font-size: 0.7em;">
+        <img src="assets/componentsoft.jpg" alt="" style="width: 40px; vertical-align: middle; margin: 0 1em 0 0" />
+        (c) 2012 Attila Juhász, Component Soft Ltd
+    </div>
+
+</div>
+
+<div class="slide cover title">
+    <h1>Ruby on Rails</h1>
+    <p>
+        <img src="assets/rails.png" alt="Ruby on Rails logo" height="100px" style="float:left; margin: 0.5em">
+        “Ruby on Rails is a breakthrough in lowering the barriers of entry to programming.
+        Powerful web applications that formerly might have taken weeks or months
+        to develop can be produced in a matter of days.”
+        <br /> -Tim O'Reilly, Founder of O'Reilly Media
+        <br />
+        <br />
+        <br />
+        <br />
+        <a href="http://appmaintainers.com">Attila Juhász</a>,
+        &lt;<a href="mailto:attila@appmaintainers.com">attila@appmaintainers.com</a>&gt;<br />
+        We are Rails guys.
+        We upgrade & maintain Ruby on Rails apps.
+        <br />
+        <br />
+        <a href="http://appmaintainers.com"><img src="assets/appmaintainers.png" alt="App Maintainers logo" height="100px"></a>
+    </p>
+</div>
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Our aim<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><img src="images/4_home_page_mockup_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>New function?<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="gp">$</span> git checkout -b filling-in-layout
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Start with links<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span><span class="cp">&lt;%=</span> <span class="n">full_title</span><span class="p">(</span><span class="k">yield</span><span class="p">(</span><span class="ss">:title</span><span class="p">))</span> <span class="cp">%&gt;</span><span class="nt">&lt;/title&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span>    <span class="s2">"application"</span><span class="p">,</span> <span class="ss">media:</span> <span class="s2">"all"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">csrf_meta_tags</span> <span class="cp">%&gt;</span>
+    <span class="c">&lt;!--[if lt IE 9]&gt;</span>
+<span class="c">    &lt;script src="http://html5shim.googlecode.com/svn/trunk/html5.js"&gt;&lt;/script&gt;</span>
+<span class="c">    &lt;![endif]--&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"navbar navbar-fixed-top navbar-inverse"</span><span class="nt">&gt;</span>
+      <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"navbar-inner"</span><span class="nt">&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+          <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"sample app"</span><span class="p">,</span> <span class="s1">'#'</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="s2">"logo"</span> <span class="cp">%&gt;</span>
+          <span class="nt">&lt;nav&gt;</span>
+            <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav pull-right"</span><span class="nt">&gt;</span>
+              <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Home"</span><span class="p">,</span>    <span class="s1">'#'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Help"</span><span class="p">,</span>    <span class="s1">'#'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+              <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Sign in"</span><span class="p">,</span> <span class="s1">'#'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+            <span class="nt">&lt;/ul&gt;</span>
+          <span class="nt">&lt;/nav&gt;</span>
+        <span class="nt">&lt;/div&gt;</span>
+      <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;/header&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Button for sign up<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"center hero-unit"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>Welcome to the Sample App<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;h2&gt;</span>
+    This is the home page for the
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://railstutorial.org/"</span><span class="nt">&gt;</span>Ruby on Rails Tutorial<span class="nt">&lt;/a&gt;</span>
+    sample application.
+  <span class="nt">&lt;/h2&gt;</span>
+
+  <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Sign up now!"</span><span class="p">,</span> <span class="s1">'#'</span><span class="p">,</span> <span class="ss">class:</span> <span class="s2">"btn btn-large btn-primary"</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="n">image_tag</span><span class="p">(</span><span class="s2">"rails.png"</span><span class="p">,</span> <span class="ss">alt:</span> <span class="s2">"Rails"</span><span class="p">),</span> <span class="s1">'http://rubyonrails.org/'</span> <span class="cp">%&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>What we get?<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><img src="images/4_layout_no_logo_or_custom_css_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Add Bootstrap!<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+
+<span class="n">gem</span> <span class="s1">'rails'</span><span class="p">,</span> <span class="s1">'3.2.9'</span>
+<span class="n">gem</span> <span class="s1">'bootstrap-sass'</span><span class="p">,</span> <span class="s1">'2.1'</span>
+<span class="o">.</span>
+<span class="o">.</span>
+<span class="o">.</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Create a custom css!<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="go">app/assets/stylesheets/custom.css.scss</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Import Bootstrap!<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="k">@import</span> <span class="s2">"bootstrap"</span><span class="p">;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Watch the result!<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><img src="images/4_sample_app_only_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Iterating..<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="k">@import</span> <span class="s2">"bootstrap"</span><span class="p">;</span>
+
+<span class="cm">/* universal */</span>
+
+<span class="nt">html</span> <span class="p">{</span>
+  <span class="na">overflow-y</span><span class="o">:</span> <span class="no">scroll</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">body</span> <span class="p">{</span>
+  <span class="na">padding-top</span><span class="o">:</span> <span class="mi">60</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">section</span> <span class="p">{</span>
+  <span class="na">overflow</span><span class="o">:</span> <span class="no">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">textarea</span> <span class="p">{</span>
+  <span class="na">resize</span><span class="o">:</span> <span class="n">vertical</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.center</span> <span class="p">{</span>
+  <span class="na">text-align</span><span class="o">:</span> <span class="no">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.center</span> <span class="nt">h1</span> <span class="p">{</span>
+  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Iterating...<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="k">@import</span> <span class="s2">"bootstrap"</span><span class="p">;</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+
+<span class="o">/*</span> <span class="nt">typography</span> <span class="o">*/</span>
+
+<span class="nt">h1</span><span class="o">,</span> <span class="nt">h2</span><span class="o">,</span> <span class="nt">h3</span><span class="o">,</span> <span class="nt">h4</span><span class="o">,</span> <span class="nt">h5</span><span class="o">,</span> <span class="nt">h6</span> <span class="p">{</span>
+  <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">h1</span> <span class="p">{</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">letter-spacing</span><span class="o">:</span> <span class="mi">-2</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">text-align</span><span class="o">:</span> <span class="no">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">h2</span> <span class="p">{</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.7</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">letter-spacing</span><span class="o">:</span> <span class="mi">-1</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">text-align</span><span class="o">:</span> <span class="no">center</span><span class="p">;</span>
+  <span class="na">font-weight</span><span class="o">:</span> <span class="no">normal</span><span class="p">;</span>
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#999</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">p</span> <span class="p">{</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.1</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.7</span><span class="kt">em</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Iterating...<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="k">@import</span> <span class="s2">"bootstrap"</span><span class="p">;</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+
+<span class="o">/*</span> <span class="nt">header</span> <span class="o">*/</span>
+
+<span class="nn">#logo</span> <span class="p">{</span>
+  <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+  <span class="na">margin-right</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.7</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#fff</span><span class="p">;</span>
+  <span class="na">text-transform</span><span class="o">:</span> <span class="no">uppercase</span><span class="p">;</span>
+  <span class="na">letter-spacing</span><span class="o">:</span> <span class="mi">-1</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">padding-top</span><span class="o">:</span> <span class="mi">9</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">font-weight</span><span class="o">:</span> <span class="no">bold</span><span class="p">;</span>
+  <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nn">#logo</span><span class="nd">:hover</span> <span class="p">{</span>
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#fff</span><span class="p">;</span>
+  <span class="na">text-decoration</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Validating<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><img src="images/4_sample_app_logo.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Refactoring into partials<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span><span class="cp">&lt;%=</span> <span class="n">full_title</span><span class="p">(</span><span class="k">yield</span><span class="p">(</span><span class="ss">:title</span><span class="p">))</span> <span class="cp">%&gt;</span><span class="nt">&lt;/title&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span>    <span class="s2">"application"</span><span class="p">,</span> <span class="ss">media:</span> <span class="s2">"all"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">csrf_meta_tags</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/shim'</span> <span class="cp">%&gt;</span>    
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/header'</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Let's add footer<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nt">&lt;footer</span> <span class="na">class=</span><span class="s">"footer"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;small&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://railstutorial.org/"</span><span class="nt">&gt;</span>Rails Tutorial<span class="nt">&lt;/a&gt;</span>
+    by Michael Hartl
+  <span class="nt">&lt;/small&gt;</span>
+  <span class="nt">&lt;nav&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+      <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"About"</span><span class="p">,</span>   <span class="s1">'#'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Contact"</span><span class="p">,</span> <span class="s1">'#'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"http://news.railstutorial.org/"</span><span class="nt">&gt;</span>News<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/nav&gt;</span>
+<span class="nt">&lt;/footer&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Footer in the layout<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span><span class="cp">&lt;%=</span> <span class="n">full_title</span><span class="p">(</span><span class="k">yield</span><span class="p">(</span><span class="ss">:title</span><span class="p">))</span> <span class="cp">%&gt;</span><span class="nt">&lt;/title&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span>    <span class="s2">"application"</span><span class="p">,</span> <span class="ss">media:</span> <span class="s2">"all"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">csrf_meta_tags</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/shim'</span> <span class="cp">%&gt;</span>    
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/header'</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/footer'</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>CSS for footer<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+
+<span class="o">/*</span> <span class="nt">footer</span> <span class="o">*/</span>
+
+<span class="nt">footer</span> <span class="p">{</span>
+  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">45</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">padding-top</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">border-top</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="mh">#eaeaea</span><span class="p">;</span>
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#999</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span> <span class="nt">a</span> <span class="p">{</span>
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#555</span><span class="p">;</span>
+<span class="p">}</span>  
+
+<span class="nt">footer</span> <span class="nt">a</span><span class="nd">:hover</span> <span class="p">{</span> 
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#222</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span> <span class="nt">small</span> <span class="p">{</span>
+  <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span> <span class="nt">ul</span> <span class="p">{</span>
+  <span class="na">float</span><span class="o">:</span> <span class="no">right</span><span class="p">;</span>
+  <span class="na">list-style</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">footer</span> <span class="nt">ul</span> <span class="nt">li</span> <span class="p">{</span>
+  <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+  <span class="na">margin-left</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>What is Asset Pipeline?<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><p>The asset pipeline involves lots of changes under Rails’ hood, but from the perspective of a typical Rails developer there are three principal features to understand: asset directories, manifest files, and preprocessor engines. Let’s consider each in turn.</p></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>SASS<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="k">@import</span> <span class="s2">"bootstrap"</span><span class="p">;</span>
+
+<span class="cm">/* mixins, variables, etc. */</span>
+
+<span class="nv">$grayMediumLight</span><span class="o">:</span> <span class="mh">#eaeaea</span><span class="p">;</span>
+
+<span class="cm">/* universal */</span>
+
+<span class="nt">html</span> <span class="p">{</span>
+  <span class="na">overflow-y</span><span class="o">:</span> <span class="no">scroll</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">body</span> <span class="p">{</span>
+  <span class="na">padding-top</span><span class="o">:</span> <span class="mi">60</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">section</span> <span class="p">{</span>
+  <span class="na">overflow</span><span class="o">:</span> <span class="no">auto</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">textarea</span> <span class="p">{</span>
+  <span class="na">resize</span><span class="o">:</span> <span class="n">vertical</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nc">.center</span> <span class="p">{</span>
+  <span class="na">text-align</span><span class="o">:</span> <span class="no">center</span><span class="p">;</span>
+  <span class="nt">h1</span> <span class="p">{</span>
+    <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* typography */</span>
+
+<span class="nt">h1</span><span class="o">,</span> <span class="nt">h2</span><span class="o">,</span> <span class="nt">h3</span><span class="o">,</span> <span class="nt">h4</span><span class="o">,</span> <span class="nt">h5</span><span class="o">,</span> <span class="nt">h6</span> <span class="p">{</span>
+  <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">h1</span> <span class="p">{</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">3</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">letter-spacing</span><span class="o">:</span> <span class="mi">-2</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">text-align</span><span class="o">:</span> <span class="no">center</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">h2</span> <span class="p">{</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.7</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">letter-spacing</span><span class="o">:</span> <span class="mi">-1</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">30</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">text-align</span><span class="o">:</span> <span class="no">center</span><span class="p">;</span>
+  <span class="na">font-weight</span><span class="o">:</span> <span class="no">normal</span><span class="p">;</span>
+  <span class="na">color</span><span class="o">:</span> <span class="nv">$grayLight</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">p</span> <span class="p">{</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.1</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.7</span><span class="kt">em</span><span class="p">;</span>
+<span class="p">}</span>
+
+
+<span class="cm">/* header */</span>
+
+<span class="nn">#logo</span> <span class="p">{</span>
+  <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+  <span class="na">margin-right</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">font-size</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.7</span><span class="kt">em</span><span class="p">;</span>
+  <span class="na">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+  <span class="na">text-transform</span><span class="o">:</span> <span class="no">uppercase</span><span class="p">;</span>
+  <span class="na">letter-spacing</span><span class="o">:</span> <span class="mi">-1</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">padding-top</span><span class="o">:</span> <span class="mi">9</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">font-weight</span><span class="o">:</span> <span class="no">bold</span><span class="p">;</span>
+  <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+  <span class="k">&amp;</span><span class="nd">:hover</span> <span class="p">{</span>
+    <span class="na">color</span><span class="o">:</span> <span class="nb">white</span><span class="p">;</span>
+    <span class="na">text-decoration</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="cm">/* footer */</span>
+
+<span class="nt">footer</span> <span class="p">{</span>
+  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">45</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">padding-top</span><span class="o">:</span> <span class="mi">5</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">border-top</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="nv">$grayMediumLight</span><span class="p">;</span>
+  <span class="na">color</span><span class="o">:</span> <span class="nv">$grayLight</span><span class="p">;</span>
+  <span class="nt">a</span> <span class="p">{</span>
+    <span class="na">color</span><span class="o">:</span> <span class="nv">$gray</span><span class="p">;</span>
+    <span class="k">&amp;</span><span class="nd">:hover</span> <span class="p">{</span> 
+      <span class="na">color</span><span class="o">:</span> <span class="nv">$grayDarker</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>  
+  <span class="nt">small</span> <span class="p">{</span> 
+    <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span> 
+  <span class="p">}</span>
+  <span class="nt">ul</span> <span class="p">{</span>
+    <span class="na">float</span><span class="o">:</span> <span class="no">right</span><span class="p">;</span>
+    <span class="na">list-style</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
+    <span class="nt">li</span> <span class="p">{</span>
+      <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+      <span class="na">margin-left</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Named routes<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><div class="center">
+<table class="tabular">
+<tr>
+<th class="align_left"><strong>Page</strong></th>
+<th class="align_left"><strong>URI</strong></th>
+<th class="align_right"><strong>Named route</strong></th>
+</tr>
+<tr class="top_bar">
+<td class="align_left">Home</td>
+<td class="align_left">/</td>
+<td class="align_right"><code>root_path</code></td>
+</tr>
+<tr>
+<td class="align_left">About</td>
+<td class="align_left">/about</td>
+<td class="align_right"><code>about_path</code></td>
+</tr>
+<tr>
+<td class="align_left">Help</td>
+<td class="align_left">/help</td>
+<td class="align_right"><code>help_path</code></td>
+</tr>
+<tr>
+<td class="align_left">Contact</td>
+<td class="align_left">/contact</td>
+<td class="align_right"><code>contact_path</code></td>
+</tr>
+<tr>
+<td class="align_left">Sign up</td>
+<td class="align_left">/signup</td>
+<td class="align_right"><code>signup_path</code></td>
+</tr>
+<tr>
+<td class="align_left">Sign in</td>
+<td class="align_left">/signin</td>
+<td class="align_right"><code>signin_path</code></td>
+</tr>
+</table>
+</div>
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Let's add a contact page<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="s2">"Static pages"</span> <span class="k">do</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="n">describe</span> <span class="s2">"Contact page"</span> <span class="k">do</span>
+
+    <span class="n">it</span> <span class="s2">"should have the h1 'Contact'"</span> <span class="k">do</span>
+      <span class="n">visit</span> <span class="s1">'/static_pages/contact'</span>
+      <span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span> <span class="ss">text:</span> <span class="s1">'Contact'</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s2">"should have the title 'Contact'"</span> <span class="k">do</span>
+      <span class="n">visit</span> <span class="s1">'/static_pages/contact'</span>
+      <span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span>
+                    <span class="ss">text:</span> <span class="s2">"Ruby on Rails Tutorial Sample App | Contact"</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Refactor routes<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="ss">SampleApp::Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">root</span> <span class="ss">to:</span> <span class="s1">'static_pages#home'</span>
+
+  <span class="n">match</span> <span class="s1">'/help'</span><span class="p">,</span>    <span class="ss">to:</span> <span class="s1">'static_pages#help'</span>
+  <span class="n">match</span> <span class="s1">'/about'</span><span class="p">,</span>   <span class="ss">to:</span> <span class="s1">'static_pages#about'</span>
+  <span class="n">match</span> <span class="s1">'/contact'</span><span class="p">,</span> <span class="ss">to:</span> <span class="s1">'static_pages#contact'</span>  
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Refactor header<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nt">&lt;header</span> <span class="na">class=</span><span class="s">"navbar navbar-fixed-top navbar-inverse"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"navbar-inner"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"sample app"</span><span class="p">,</span> <span class="n">root_path</span><span class="p">,</span> <span class="nb">id</span><span class="p">:</span> <span class="s2">"logo"</span> <span class="cp">%&gt;</span>
+      <span class="nt">&lt;nav&gt;</span>
+        <span class="nt">&lt;ul</span> <span class="na">class=</span><span class="s">"nav pull-right"</span><span class="nt">&gt;</span>
+          <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Home"</span><span class="p">,</span>    <span class="n">root_path</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Help"</span><span class="p">,</span>    <span class="n">help_path</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+          <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Sign in"</span><span class="p">,</span> <span class="s1">'#'</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+        <span class="nt">&lt;/ul&gt;</span>
+      <span class="nt">&lt;/nav&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/header&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Refactor footer<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nt">&lt;footer</span> <span class="na">class=</span><span class="s">"footer"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;small&gt;</span>
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://railstutorial.org/"</span><span class="nt">&gt;</span>Rails Tutorial<span class="nt">&lt;/a&gt;</span>
+    by Michael Hartl
+  <span class="nt">&lt;/small&gt;</span>
+  <span class="nt">&lt;nav&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+      <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"About"</span><span class="p">,</span>   <span class="n">about_path</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;</span><span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Contact"</span><span class="p">,</span> <span class="n">contact_path</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+      <span class="nt">&lt;li&gt;&lt;a</span> <span class="na">href=</span><span class="s">"http://news.railstutorial.org/"</span><span class="nt">&gt;</span>News<span class="nt">&lt;/a&gt;&lt;/li&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/nav&gt;</span>
+<span class="nt">&lt;/footer&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Refactor rspec<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="n">describe</span> <span class="s2">"Home page"</span> <span class="k">do</span>
+  <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">root_path</span> <span class="p">}</span> 
+
+  <span class="n">it</span> <span class="s2">"should have the h1 'Sample App'"</span> <span class="k">do</span>
+    <span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span> <span class="ss">text:</span> <span class="s1">'Sample App'</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">it</span> <span class="s2">"should have the base title"</span> <span class="k">do</span>
+    <span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span>
+                      <span class="ss">text:</span> <span class="s2">"Ruby on Rails Tutorial Sample App"</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="n">it</span> <span class="s2">"should not have a custom page title"</span> <span class="k">do</span>
+    <span class="n">page</span><span class="o">.</span><span class="n">should_not</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="s1">'| Home'</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Refactor rspec<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre>  <span class="n">subject</span> <span class="p">{</span> <span class="n">page</span> <span class="p">}</span>
+
+  <span class="n">describe</span> <span class="s2">"Home page"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">root_path</span> <span class="p">}</span> 
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span> <span class="ss">text:</span> <span class="s1">'Sample App'</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span> <span class="s1">'title'</span><span class="p">,</span>
+                        <span class="ss">text:</span> <span class="s2">"Ruby on Rails Tutorial Sample App"</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should_not</span> <span class="n">have_selector</span> <span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="s1">'| Home'</span> <span class="p">}</span>
+  <span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>spec/support/utilities.rb<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="k">def</span> <span class="nf">full_title</span><span class="p">(</span><span class="n">page_title</span><span class="p">)</span>
+  <span class="n">base_title</span> <span class="o">=</span> <span class="s2">"Ruby on Rails Tutorial Sample App"</span>
+  <span class="k">if</span> <span class="n">page_title</span><span class="o">.</span><span class="n">empty?</span>
+    <span class="n">base_title</span>
+  <span class="k">else</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="n">base_title</span><span class="si">}</span><span class="s2"> | </span><span class="si">#{</span><span class="n">page_title</span><span class="si">}</span><span class="s2">"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Refactor rspec<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="s2">"Static pages"</span> <span class="k">do</span>
+
+  <span class="n">subject</span> <span class="p">{</span> <span class="n">page</span> <span class="p">}</span>
+
+  <span class="n">describe</span> <span class="s2">"Home page"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">root_path</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span>    <span class="ss">text:</span> <span class="s1">'Sample App'</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="n">full_title</span><span class="p">(</span><span class="s1">''</span><span class="p">))</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should_not</span> <span class="n">have_selector</span> <span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="s1">'| Home'</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s2">"Help page"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">help_path</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span>    <span class="ss">text:</span> <span class="s1">'Help'</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="n">full_title</span><span class="p">(</span><span class="s1">'Help'</span><span class="p">))</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s2">"About page"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">about_path</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span>    <span class="ss">text:</span> <span class="s1">'About'</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="n">full_title</span><span class="p">(</span><span class="s1">'About Us'</span><span class="p">))</span> <span class="p">}</span>
+  <span class="k">end</span>
+
+  <span class="n">describe</span> <span class="s2">"Contact page"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">contact_path</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span>    <span class="ss">text:</span> <span class="s1">'Contact'</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="n">full_title</span><span class="p">(</span><span class="s1">'Contact'</span><span class="p">))</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>User sign up<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><p>As a capstone to our work on the layout and routing, in this section we’ll make a route for the signup page, which will mean creating a second controller along the way. This is a first important step toward allowing users to register for our site; we’ll take the next step, modeling users, in <a class="ref" href="#">Chapter 6</a>, and we’ll finish the job in <a class="ref" href="#">Chapter 7</a>.</p></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Generate<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="gp">$</span> rails generate controller Users new --no-test-framework
+<span class="go">      create  app/controllers/users_controller.rb</span>
+<span class="go">       route  get "users/new"</span>
+<span class="go">      invoke  erb</span>
+<span class="go">      create    app/views/users</span>
+<span class="go">      create    app/views/users/new.html.erb</span>
+<span class="go">      invoke  helper</span>
+<span class="go">      create    app/helpers/users_helper.rb</span>
+<span class="go">      invoke  assets</span>
+<span class="go">      invoke    coffee</span>
+<span class="go">      create      app/assets/javascripts/users.js.coffee</span>
+<span class="go">      invoke    scss</span>
+<span class="go">      create      app/assets/stylesheets/users.css.scss</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Generate tests<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="gp">$</span> rails generate integration_test user_pages
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>What to test?<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="s2">"User pages"</span> <span class="k">do</span>
+
+  <span class="n">subject</span> <span class="p">{</span> <span class="n">page</span> <span class="p">}</span>
+
+  <span class="n">describe</span> <span class="s2">"signup page"</span> <span class="k">do</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">signup_path</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span>    <span class="ss">text:</span> <span class="s1">'Sign up'</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="n">full_title</span><span class="p">(</span><span class="s1">'Sign up'</span><span class="p">))</span> <span class="p">}</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Sign up routing<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="ss">SampleApp::Application</span><span class="o">.</span><span class="n">routes</span><span class="o">.</span><span class="n">draw</span> <span class="k">do</span>
+  <span class="n">get</span> <span class="s2">"users/new"</span>
+
+  <span class="n">root</span> <span class="ss">to:</span> <span class="s1">'static_pages#home'</span>
+
+  <span class="n">match</span> <span class="s1">'/signup'</span><span class="p">,</span>  <span class="ss">to:</span> <span class="s1">'users#new'</span>
+
+  <span class="n">match</span> <span class="s1">'/help'</span><span class="p">,</span>    <span class="ss">to:</span> <span class="s1">'static_pages#help'</span>
+  <span class="n">match</span> <span class="s1">'/about'</span><span class="p">,</span>   <span class="ss">to:</span> <span class="s1">'static_pages#about'</span>
+  <span class="n">match</span> <span class="s1">'/contact'</span><span class="p">,</span> <span class="ss">to:</span> <span class="s1">'static_pages#contact'</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Initial sign up page<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="cp">&lt;%</span> <span class="n">provide</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="s1">'Sign up'</span><span class="p">)</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;h1&gt;</span>Sign up<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>Find me in app/views/users/new.html.erb<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Home page button<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><pre><span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"center hero-unit"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;h1&gt;</span>Welcome to the Sample App<span class="nt">&lt;/h1&gt;</span>
+
+  <span class="nt">&lt;h2&gt;</span>
+    This is the home page for the
+    <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://railstutorial.org/"</span><span class="nt">&gt;</span>Ruby on Rails Tutorial<span class="nt">&lt;/a&gt;</span>
+    sample application.
+  <span class="nt">&lt;/h2&gt;</span>
+
+  <span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="s2">"Sign up now!"</span><span class="p">,</span> <span class="n">signup_path</span><span class="p">,</span> <span class="ss">class:</span> <span class="s2">"btn btn-large btn-primary"</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+
+<span class="cp">&lt;%=</span> <span class="n">link_to</span> <span class="n">image_tag</span><span class="p">(</span><span class="s2">"rails.png"</span><span class="p">,</span> <span class="ss">alt:</span> <span class="s2">"Rails"</span><span class="p">),</span> <span class="s1">'http://rubyonrails.org/'</span> <span class="cp">%&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/filling-in-the-layout -->
+<div class="slide">
+
+<h1>Here we are<span style='float:right; font-size:0.5em'> chapter 5</span></h1>
+
+<div><img src="images/4_new_signup_page_bootstrap.png">
+</div>
+</div>
+
+
+
+
+
+</body>
+</html>

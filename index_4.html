@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 1st November 2003), see www.w3.org" />
+<title>Ruby on Rails - 2012 Attila Juhász, Component Soft Ltd</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content=
+"Copyright &#169; 2005-2010 W3C (MIT, ERCIM, Keio)" />
+<meta name="duration" content="20" />
+<link rel="stylesheet" href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" type="text/css" />
+<script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js" charset="utf-8" type="text/javascript">
+</script>
+</head>
+<body>
+
+<div class="background">
+    <div class="footer" style="position: absolute; bottom: 0; padding: 1em 1em 2em 1em; font-size: 0.7em;">
+        <img src="assets/componentsoft.jpg" alt="" style="width: 40px; vertical-align: middle; margin: 0 1em 0 0" />
+        (c) 2012 Attila Juhász, Component Soft Ltd
+    </div>
+
+</div>
+
+<div class="slide cover title">
+    <h1>Ruby on Rails</h1>
+    <p>
+        <img src="assets/rails.png" alt="Ruby on Rails logo" height="100px" style="float:left; margin: 0.5em">
+        “Ruby on Rails is a breakthrough in lowering the barriers of entry to programming.
+        Powerful web applications that formerly might have taken weeks or months
+        to develop can be produced in a matter of days.”
+        <br /> -Tim O'Reilly, Founder of O'Reilly Media
+        <br />
+        <br />
+        <br />
+        <br />
+        <a href="http://appmaintainers.com">Attila Juhász</a>,
+        &lt;<a href="mailto:attila@appmaintainers.com">attila@appmaintainers.com</a>&gt;<br />
+        We are Rails guys.
+        We upgrade & maintain Ruby on Rails apps.
+        <br />
+        <br />
+        <a href="http://appmaintainers.com"><img src="assets/appmaintainers.png" alt="App Maintainers logo" height="100px"></a>
+    </p>
+</div>
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/rails-flavored-ruby -->
+<div class="slide">
+
+<h1>Refactor with a helper<span style='float:right; font-size:0.5em'> chapter 4</span></h1>
+
+<div><pre><span class="k">module</span> <span class="nn">ApplicationHelper</span>
+
+  <span class="c1"># Returns the full title on a per-page basis.</span>
+  <span class="k">def</span> <span class="nf">full_title</span><span class="p">(</span><span class="n">page_title</span><span class="p">)</span>
+    <span class="n">base_title</span> <span class="o">=</span> <span class="s2">"Ruby on Rails Tutorial Sample App"</span>
+    <span class="k">if</span> <span class="n">page_title</span><span class="o">.</span><span class="n">empty?</span>
+      <span class="n">base_title</span>
+    <span class="k">else</span>
+      <span class="s2">"</span><span class="si">#{</span><span class="n">base_title</span><span class="si">}</span><span class="s2"> | </span><span class="si">#{</span><span class="n">page_title</span><span class="si">}</span><span class="s2">"</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/rails-flavored-ruby -->
+<div class="slide">
+
+<h1>Our new layout<span style='float:right; font-size:0.5em'> chapter 4</span></h1>
+
+<div><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  <span class="nt">&lt;head&gt;</span>
+    <span class="nt">&lt;title&gt;</span><span class="cp">&lt;%=</span> <span class="n">full_title</span><span class="p">(</span><span class="k">yield</span><span class="p">(</span><span class="ss">:title</span><span class="p">))</span> <span class="cp">%&gt;</span><span class="nt">&lt;/title&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">stylesheet_link_tag</span>    <span class="s2">"application"</span><span class="p">,</span> <span class="ss">:media</span> <span class="o">=&gt;</span> <span class="s2">"all"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">javascript_include_tag</span> <span class="s2">"application"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">csrf_meta_tags</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/head&gt;</span>
+  <span class="nt">&lt;body&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/rails-flavored-ruby -->
+<div class="slide">
+
+<h1>Don't forget the test<span style='float:right; font-size:0.5em'> chapter 4</span></h1>
+
+<div><pre><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="s2">"Static pages"</span> <span class="k">do</span>
+
+  <span class="n">describe</span> <span class="s2">"Home page"</span> <span class="k">do</span>
+
+    <span class="n">it</span> <span class="s2">"should have the h1 'Sample App'"</span> <span class="k">do</span>
+      <span class="n">visit</span> <span class="s1">'/static_pages/home'</span>
+      <span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span> <span class="ss">:text</span> <span class="o">=&gt;</span> <span class="s1">'Sample App'</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s2">"should have the base title"</span> <span class="k">do</span>
+      <span class="n">visit</span> <span class="s1">'/static_pages/home'</span>
+      <span class="n">page</span><span class="o">.</span><span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span>
+                        <span class="ss">:text</span> <span class="o">=&gt;</span> <span class="s2">"Ruby on Rails Tutorial Sample App"</span><span class="p">)</span>
+    <span class="k">end</span>
+
+    <span class="n">it</span> <span class="s2">"should not have a custom page title"</span> <span class="k">do</span>
+      <span class="n">visit</span> <span class="s1">'/static_pages/home'</span>
+      <span class="n">page</span><span class="o">.</span><span class="n">should_not</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">:text</span> <span class="o">=&gt;</span> <span class="s1">'| Home'</span><span class="p">)</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/rails-flavored-ruby -->
+<div class="slide">
+
+<h1>New home template<span style='float:right; font-size:0.5em'> chapter 4</span></h1>
+
+<div><pre><span class="nt">&lt;h1&gt;</span>Sample App<span class="nt">&lt;/h1&gt;</span>
+<span class="nt">&lt;p&gt;</span>
+  This is the home page for the
+  <span class="nt">&lt;a</span> <span class="na">href=</span><span class="s">"http://railstutorial.org/"</span><span class="nt">&gt;</span>Ruby on Rails Tutorial<span class="nt">&lt;/a&gt;</span>
+  sample application.
+<span class="nt">&lt;/p&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/rails-flavored-ruby -->
+<div class="slide">
+
+<h1>What's going on?<span style='float:right; font-size:0.5em'> chapter 4</span></h1>
+
+<div><pre><span class="k">module</span> <span class="nn">ApplicationHelper</span>
+
+  <span class="c1"># Returns the full title on a per-page basis.       # Documentation comment</span>
+  <span class="k">def</span> <span class="nf">full_title</span><span class="p">(</span><span class="n">page_title</span><span class="p">)</span>                          <span class="c1"># Method definition</span>
+    <span class="n">base_title</span> <span class="o">=</span> <span class="s2">"Ruby on Rails Tutorial Sample App"</span>  <span class="c1"># Variable assignment</span>
+    <span class="k">if</span> <span class="n">page_title</span><span class="o">.</span><span class="n">empty?</span>                              <span class="c1"># Boolean test</span>
+      <span class="n">base_title</span>                                      <span class="c1"># Implicit return</span>
+    <span class="k">else</span>
+      <span class="s2">"</span><span class="si">#{</span><span class="n">base_title</span><span class="si">}</span><span class="s2"> | </span><span class="si">#{</span><span class="n">page_title</span><span class="si">}</span><span class="s2">"</span>                 <span class="c1"># String interpolation</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/rails-flavored-ruby -->
+<div class="slide">
+
+<h1>Time for Ruby<span style='float:right; font-size:0.5em'> chapter 4</span></h1>
+
+<div><p>Questions?</p></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/rails-flavored-ruby -->
+<div class="slide">
+
+<h1>A simple class<span style='float:right; font-size:0.5em'> chapter 4</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">User</span>
+  <span class="kp">attr_accessor</span> <span class="ss">:name</span><span class="p">,</span> <span class="ss">:email</span>
+
+  <span class="k">def</span> <span class="nf">initialize</span><span class="p">(</span><span class="n">attributes</span> <span class="o">=</span> <span class="p">{})</span>
+    <span class="vi">@name</span>  <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:name</span><span class="o">]</span>
+    <span class="vi">@email</span> <span class="o">=</span> <span class="n">attributes</span><span class="o">[</span><span class="ss">:email</span><span class="o">]</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">formatted_email</span>
+    <span class="s2">"</span><span class="si">#{</span><span class="vi">@name</span><span class="si">}</span><span class="s2"> &lt;</span><span class="si">#{</span><span class="vi">@email</span><span class="si">}</span><span class="s2">&gt;"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+
+
+</body>
+</html>

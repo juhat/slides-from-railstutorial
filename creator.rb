@@ -280,8 +280,16 @@ content = [
                 selector: ":nth-child(74) img"
             },
             {
+                title: "Let's create one!",
+                selector: ":nth-child(79) pre"
+            },
+            {
                 title: "New branch",
                 selector: ":nth-child(93) pre"
+            },
+            {
+                title: "Rspec install",
+                selector: ":nth-child(95) pre"
             },
             {
                 title: "StaticPagesController",
@@ -412,21 +420,317 @@ content = [
     {
         url: "http://ruby.railstutorial.org/chapters/rails-flavored-ruby",
         slides: [
+            {
+                title: "Refactor with a helper",
+                selector: ":nth-child(44) pre"
+            },
+            {
+                title: "Our new layout",
+                selector: ":nth-child(51) pre"
+            },
+            {
+                title: "Don't forget the test",
+                selector: ":nth-child(54) pre"
+            },
+            {
+                title: "New home template",
+                selector: ":nth-child(60) pre"
+            },
+            {
+                title: "What's going on?",
+                selector: ":nth-child(145) pre"
+            },
+            {
+                title: "Time for Ruby",
+                content: "<p>Questions?</p>"
+            },
+            {
+                title: "A simple class",
+                selector: ":nth-child(311) pre"
+            }
         ]
     },
     {
         url: "http://ruby.railstutorial.org/chapters/filling-in-the-layout",
         slides: [
+            {
+                title: "Our aim",
+                selector: ":nth-child(30) img"
+            },
+            {
+                title: "New function?",
+                selector: ":nth-child(32) pre"
+            },
+            {
+                title: "Start with links",
+                selector: ":nth-child(37) pre"
+            },
+            {
+                title: "Button for sign up",
+                selector: ":nth-child(68) pre"
+            },
+            {
+                title: "What we get?",
+                selector: ":nth-child(78) img"
+            },
+            {
+                title: "Add Bootstrap!",
+                selector: ":nth-child(84) pre"
+            },
+            {
+                title: "Create a custom css!",
+                selector: ":nth-child(89) pre"
+            },
+            {
+                title: "Import Bootstrap!",
+                selector: ":nth-child(95) pre"
+            },
+            {
+                title: "Watch the result!",
+                selector: ":nth-child(98) img"
+            },
+            {
+                title: "Iterating..",
+                selector: ":nth-child(101) pre"
+            },
+            {
+                title: "Iterating...",
+                selector: ":nth-child(111) pre"
+            },
+            {
+                title: "Iterating...",
+                selector: ":nth-child(116) pre"
+            },
+            {
+                title: "Validating",
+                selector: ":nth-child(119) img"
+            },
+            {
+                title: "Refactoring into partials",
+                selector: ":nth-child(124) pre"
+            },
+            {
+                title: "Let's add footer",
+                selector: ":nth-child(136) pre"
+            },
+            {
+                title: "Footer in the layout",
+                selector: ":nth-child(140) pre"
+            },
+            {
+                title: "CSS for footer",
+                selector: ":nth-child(143) pre"
+            },
+            {
+                title: "What is Asset Pipeline?",
+                selector: "p:nth-child(151)"
+            },
+            {
+                title: "SASS",
+                selector: ":nth-child(213) pre"
+            },
+            {
+                title: "Named routes",
+                selector: ".table .center"
+            },
+            {
+                title: "Let's add a contact page",
+                selector: ":nth-child(227) pre"
+            },
+            {
+                title: "Refactor routes",
+                selector: ":nth-child(279) pre"
+            },
+            {
+                title: "Refactor header",
+                selector: ":nth-child(297) pre"
+            },
+            {
+                title: "Refactor footer",
+                selector: ":nth-child(301) pre"
+            },
+            {
+                title: "Refactor rspec",
+                selector: ":nth-child(312) pre"
+            },
+            {
+                title: "Refactor rspec",
+                selector: ":nth-child(326) pre"
+            },
+            {
+                title: "spec/support/utilities.rb",
+                selector: ":nth-child(331) pre"
+            },
+            {
+                title: "Refactor rspec",
+                selector: ":nth-child(337) pre"
+            },
+            {
+                title: "User sign up",
+                selector: "p:nth-child(343)"
+            },
+            {
+                title: "Generate",
+                selector: ":nth-child(348) pre"
+            },
+            {
+                title: "Generate tests",
+                selector: ":nth-child(357) pre"
+            },
+            {
+                title: "What to test?",
+                selector: ":nth-child(360) pre"
+            },
+            {
+                title: "Sign up routing",
+                selector: ":nth-child(372) pre"
+            },
+            {
+                title: "Initial sign up page",
+                selector: ":nth-child(376) pre"
+            },
+            {
+                title: "Home page button",
+                selector: ":nth-child(379) pre"
+            },
+            {
+                title: "Here we are",
+                selector: ":nth-child(382) img"
+            },
         ]
     },
     {
         url: "http://ruby.railstutorial.org/chapters/modeling-users",
         slides: [
+            {
+                title: "Modeling users",
+                selector: "p:nth-child(25)"
+            },
+            {
+                title: "Authentication",
+                selector: ":nth-child(27)"
+            },
+            {
+                title: "New function?",
+                selector: ":nth-child(29) pre"
+            },
+            {
+                title: "Sign up vision",
+                selector: ":nth-child(35) img"
+            },
+            {
+                title: "Controller for users",
+                selector: ":nth-child(44) pre"
+            },
+            {
+                title: "Annotate models!",
+                selector: ":nth-child(77) pre"
+            },
+            {
+                title: "spec/models/user_spec.rb",
+                selector: ":nth-child(162) pre"
+            },
+            {
+                title: "Validating name",
+                selector: ":nth-child(188) pre"
+            },
+            {
+                title: "Refactoring tests",
+                selector: ":nth-child(201) pre"
+            },
+            {
+                title: "Same with email?",
+                content: "<p>Let's do it!</p>"
+            },
+            {
+                title: "Tests for name length!",
+                selector: ":nth-child(229) pre"
+            },
+            {
+                title: "Test for email format",
+                selector: ":nth-child(243) pre"
+            },
+            {
+                title: "Validating email",
+                selector: ":nth-child(247) pre"
+            },
+            {
+                title: "Rubular time",
+                selector: ":nth-child(256) img"
+            },
+            {
+                title: "Validating uniqueness",
+                selector: ":nth-child(275) pre"
+            },
+            {
+                title: "Wait!",
+                selector: ":nth-child(288) pre"
+            },
+            {
+                title: "Wait!",
+                selector: ":nth-child(296) pre"
+            },
+            {
+                title: "Secure password",
+                selector: "p:nth-child(304)"
+            },
+            {
+                title: "How will this work?",
+                selector: ":nth-child(310) img"
+            },
+            {
+                title: "Gemfile",
+                selector: ":nth-child(313) pre"
+            },
+            {
+                title: "user_spec.rb",
+                selector: ":nth-child(336) pre"
+            },
+            {
+                title: "Generating a migration",
+                selector: ":nth-child(324) pre"
+            },
+            {
+                title: "Test prepare",
+                selector: ":nth-child(330) pre"
+            },
+            {
+                title: "Validating password",
+                selector: ":nth-child(354) pre"
+            },
+            {
+                title: "How to authenticate?",
+                selector: ":nth-child(361) pre"
+            },
+            {
+                title: "Rspec let",
+                selector: ":nth-child(374) p:nth-child(2)"
+            },
+            {
+                title: "Test authentication",
+                selector: ":nth-child(379) pre"
+            },
+            {
+                title: "User secure password",
+                selector: ":nth-child(400) pre"
+            },
+            {
+                title: "Console user test",
+                selector: ":nth-child(407) pre"
+            },
+            {
+                title: "Console authentication test",
+                selector: ":nth-child(414) pre"
+            }
         ]
     },
     {
         url: "http://ruby.railstutorial.org/chapters/sign-up",
         slides: [
+            {
+                title: "",
+                selector: ""
+            },
         ]
     },
     {
