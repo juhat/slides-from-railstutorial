@@ -728,9 +728,185 @@ content = [
         url: "http://ruby.railstutorial.org/chapters/sign-up",
         slides: [
             {
-                title: "",
-                selector: ""
+                title: "Final user page",
+                selector: ":nth-child(34) img"
             },
+            {
+                title: "Debugging",
+                selector: ":nth-child(39) pre"
+            },
+            {
+                title: "Styles for debugging",
+                selector: ":nth-child(42) pre"
+            },
+            {
+                title: "How debug looks like",
+                selector: ":nth-child(49) img"
+            },
+            {
+                title: "Loggger?",
+                content: "<p>logger.info('')<br/>logger.error('')</p>"
+            },
+            {
+                title: "User resource",
+                selector: ":nth-child(68) pre"
+            },
+            {
+                title: "users/show.html.erb",
+                selector: ":nth-child(82) pre"
+            },
+            {
+                title: "users_controller.rb",
+                selector: ":nth-child(86) pre"
+            },
+            {
+                title: "Initial user page",
+                selector: ":nth-child(96) img"
+            },
+            {
+                title: "user_pages_spec.rb",
+                selector: ":nth-child(104) pre"
+            },
+            {
+                title: "What about test data?",
+                selector: ":nth-child(109) pre"
+            },
+            {
+                title: "spec/factories.rb",
+                selector: ":nth-child(114) pre"
+            },
+            {
+                title: "Changes in the spec",
+                selector: ":nth-child(120) pre"
+            },
+            {
+                title: "users/show.html.erb title",
+                selector: ":nth-child(125) pre"
+            },
+            {
+                title: "Fancy images?",
+                selector: ":nth-child(150) img"
+            },
+            {
+                title: "users/show.html.erb",
+                selector: ":nth-child(137) pre"
+            },
+            {
+                title: "users_helper.rb",
+                selector: ":nth-child(145) pre"
+            },
+            {
+                title: "Another email?",
+                selector: ":nth-child(155) img"
+            },
+            {
+                title: "User sidebar",
+                selector: ":nth-child(158) pre"
+            },
+            {
+                title: "Styling",
+                selector: ":nth-child(161) pre"
+            },
+            {
+                title: "Checkpoint",
+                selector: ":nth-child(163) img"
+            },
+            {
+                title: "Sign up form mock up",
+                selector: ":nth-child(170) img"
+            },
+            {
+                title: "Db reset",
+                selector: ":nth-child(172) pre"
+            },
+            {
+                title: "user_pages_spec.rb",
+                selector: ":nth-child(207) pre"
+            },
+            {
+                title: "Sign up form",
+                selector: ":nth-child(215) pre"
+            },
+            {
+                title: "Produces this",
+                selector: ":nth-child(237) pre"
+            },
+            {
+                title: "@user?",
+                selector: ":nth-child(225) pre"
+            },
+            {
+                title: "Styling",
+                selector: ":nth-child(230) pre"
+            },
+            {
+                title: "Checkpoint",
+                selector: ":nth-child(232) img"
+            },
+            {
+                title: "Sign up failure",
+                selector: ":nth-child(260) img"
+            },
+            {
+                title: "users_controller#create",
+                selector: ":nth-child(270) pre"
+            },
+            {
+                title: "Data passed",
+                selector: ":nth-child(275) img"
+            },
+            {
+                title: "Debug shows it",
+                selector: ":nth-child(277) pre"
+            },
+            {
+                title: "Insert error messages",
+                selector: ":nth-child(299) pre"
+            },
+            {
+                title: "shared/error_messages.html.erb",
+                selector: ":nth-child(302) pre"
+            },
+            {
+                title: "Pluralize :)",
+                selector: ":nth-child(309) pre"
+            },
+            {
+                title: "Pluralize :)",
+                selector: ":nth-child(311) pre"
+            },
+            {
+                title: "Error styles",
+                selector: ":nth-child(317) pre"
+            },
+            {
+                title: "Checkpoint",
+                selector: ":nth-child(323) img"
+            },
+            {
+                title: "What about success?",
+                selector: ":nth-child(329) img"
+            },
+            {
+                title: "User creation",
+                selector: ":nth-child(336) pre"
+            },
+            {
+                title: "Controller variables",
+                content: "<ul><li>params</li><li>request</li><li>flash</li><li>session</li></ul>"
+            },
+            {
+                title: "Message for redirect",
+                selector: ":nth-child(354) pre"
+            },
+            {
+                title: "Flash shows up",
+                selector: ":nth-child(346) pre"
+            },
+            {
+                title: "First sign up",
+                selector: ":nth-child(359) img"
+            }
         ]
     },
     {

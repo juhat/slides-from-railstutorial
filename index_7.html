@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en-US">
+<head>
+<meta name="generator" content=
+"HTML Tidy for Linux/x86 (vers 1st November 2003), see www.w3.org" />
+<title>Ruby on Rails - 2012 Attila Juhász, Component Soft Ltd</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="copyright" content=
+"Copyright &#169; 2005-2010 W3C (MIT, ERCIM, Keio)" />
+<meta name="duration" content="20" />
+<link rel="stylesheet" href="http://www.w3.org/Talks/Tools/Slidy2/styles/slidy.css" type="text/css" />
+<script src="http://www.w3.org/Talks/Tools/Slidy2/scripts/slidy.js" charset="utf-8" type="text/javascript">
+</script>
+</head>
+<body>
+
+<div class="background">
+    <div class="footer" style="position: absolute; bottom: 0; padding: 1em 1em 2em 1em; font-size: 0.7em;">
+        <img src="assets/componentsoft.jpg" alt="" style="width: 40px; vertical-align: middle; margin: 0 1em 0 0" />
+        (c) 2012 Attila Juhász, Component Soft Ltd
+    </div>
+
+</div>
+
+<div class="slide cover title">
+    <h1>Ruby on Rails</h1>
+    <p>
+        <img src="assets/rails.png" alt="Ruby on Rails logo" height="100px" style="float:left; margin: 0.5em">
+        “Ruby on Rails is a breakthrough in lowering the barriers of entry to programming.
+        Powerful web applications that formerly might have taken weeks or months
+        to develop can be produced in a matter of days.”
+        <br /> -Tim O'Reilly, Founder of O'Reilly Media
+        <br />
+        <br />
+        <br />
+        <br />
+        <a href="http://appmaintainers.com">Attila Juhász</a>,
+        &lt;<a href="mailto:attila@appmaintainers.com">attila@appmaintainers.com</a>&gt;<br />
+        We are Rails guys.
+        We upgrade & maintain Ruby on Rails apps.
+        <br />
+        <br />
+        <a href="http://appmaintainers.com"><img src="assets/appmaintainers.png" alt="App Maintainers logo" height="100px"></a>
+    </p>
+</div>
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Final user page<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_profile_mockup_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Debugging<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  .
+  .
+  .
+  <span class="nt">&lt;body&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/header'</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/footer'</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">debug</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">development?</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Styles for debugging<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="k">@import</span> <span class="s2">"bootstrap"</span><span class="p">;</span>
+
+<span class="cm">/* mixins, variables, etc. */</span>
+
+<span class="nv">$grayMediumLight</span><span class="o">:</span> <span class="mh">#eaeaea</span><span class="p">;</span>
+
+<span class="k">@mixin</span><span class="nf"> box_sizing</span> <span class="p">{</span>
+  <span class="na">-moz-box-sizing</span><span class="o">:</span> <span class="no">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
+  <span class="na">-webkit-box-sizing</span><span class="o">:</span> <span class="no">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span> 
+  <span class="na">box-sizing</span><span class="o">:</span> <span class="no">border</span><span class="o">-</span><span class="n">box</span><span class="p">;</span>
+<span class="p">}</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+
+<span class="o">/*</span> <span class="nt">miscellaneous</span> <span class="o">*/</span>
+
+<span class="nc">.debug_dump</span> <span class="p">{</span>
+  <span class="na">clear</span><span class="o">:</span> <span class="no">both</span><span class="p">;</span>
+  <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+  <span class="na">width</span><span class="o">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="na">margin-top</span><span class="o">:</span> <span class="mi">45</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">@include</span><span class="nd"> box_sizing</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>How debug looks like<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_home_page_with_debug_2nd_ed.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Loggger?<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><p>logger.info('')<br/>logger.error('')</p></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>User resource<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="n">resources</span> <span class="ss">:users</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>users/show.html.erb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;%=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span> <span class="cp">%&gt;</span>, <span class="cp">&lt;%=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">email</span> <span class="cp">%&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>users_controller.rb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+
+  <span class="k">def</span> <span class="nf">show</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">find</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:id</span><span class="o">]</span><span class="p">)</span>
+  <span class="k">end</span>
+
+  <span class="k">def</span> <span class="nf">new</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Initial user page<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_user_show_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>user_pages_spec.rb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="n">describe</span> <span class="s2">"profile page"</span> <span class="k">do</span>
+  <span class="c1"># Code to make a user variable</span>
+  <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">user_path</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="p">}</span>
+
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span>    <span class="ss">text:</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">}</span>
+  <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">}</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>What about test data?<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="n">source</span> <span class="s1">'https://rubygems.org'</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="n">group</span> <span class="ss">:test</span> <span class="k">do</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="o">.</span>
+    <span class="n">gem</span> <span class="s1">'factory_girl_rails'</span><span class="p">,</span> <span class="s1">'4.1.0'</span>
+  <span class="k">end</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span> 
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>spec/factories.rb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="no">FactoryGirl</span><span class="o">.</span><span class="n">define</span> <span class="k">do</span>
+  <span class="n">factory</span> <span class="ss">:user</span> <span class="k">do</span>
+    <span class="nb">name</span>     <span class="s2">"Michael Hartl"</span>
+    <span class="n">email</span>    <span class="s2">"michael@example.com"</span>
+    <span class="n">password</span> <span class="s2">"foobar"</span>
+    <span class="n">password_confirmation</span> <span class="s2">"foobar"</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Changes in the spec<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="s2">"User pages"</span> <span class="k">do</span>
+
+  <span class="n">subject</span> <span class="p">{</span> <span class="n">page</span> <span class="p">}</span>
+
+  <span class="n">describe</span> <span class="s2">"profile page"</span> <span class="k">do</span>
+    <span class="n">let</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span> <span class="p">{</span> <span class="no">FactoryGirl</span><span class="o">.</span><span class="n">create</span><span class="p">(</span><span class="ss">:user</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">user_path</span><span class="p">(</span><span class="n">user</span><span class="p">)</span> <span class="p">}</span>
+
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'h1'</span><span class="p">,</span>    <span class="ss">text:</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">}</span>
+    <span class="n">it</span> <span class="p">{</span> <span class="n">should</span> <span class="n">have_selector</span><span class="p">(</span><span class="s1">'title'</span><span class="p">,</span> <span class="ss">text:</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="p">}</span>
+  <span class="k">end</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>users/show.html.erb title<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;%</span> <span class="n">provide</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;h1&gt;</span><span class="cp">&lt;%=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span> <span class="cp">%&gt;</span><span class="nt">&lt;/h1&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Fancy images?<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_profile_with_gravatar_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>users/show.html.erb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;%</span> <span class="n">provide</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;h1&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="n">gravatar_for</span> <span class="vi">@user</span> <span class="cp">%&gt;</span>
+  <span class="cp">&lt;%=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;/h1&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>users_helper.rb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="k">module</span> <span class="nn">UsersHelper</span>
+
+  <span class="c1"># Returns the Gravatar (http://gravatar.com/) for the given user.</span>
+  <span class="k">def</span> <span class="nf">gravatar_for</span><span class="p">(</span><span class="n">user</span><span class="p">)</span>
+    <span class="n">gravatar_id</span> <span class="o">=</span> <span class="ss">Digest::MD5</span><span class="o">::</span><span class="n">hexdigest</span><span class="p">(</span><span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">downcase</span><span class="p">)</span>
+    <span class="n">gravatar_url</span> <span class="o">=</span> <span class="s2">"https://secure.gravatar.com/avatar/</span><span class="si">#{</span><span class="n">gravatar_id</span><span class="si">}</span><span class="s2">"</span>
+    <span class="n">image_tag</span><span class="p">(</span><span class="n">gravatar_url</span><span class="p">,</span> <span class="ss">alt:</span> <span class="n">user</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="ss">class:</span> <span class="s2">"gravatar"</span><span class="p">)</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Another email?<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_profile_custom_gravatar_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>User sidebar<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;%</span> <span class="n">provide</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span><span class="p">)</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;aside</span> <span class="na">class=</span><span class="s">"span4"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;section&gt;</span>
+      <span class="nt">&lt;h1&gt;</span>
+        <span class="cp">&lt;%=</span> <span class="n">gravatar_for</span> <span class="vi">@user</span> <span class="cp">%&gt;</span>
+        <span class="cp">&lt;%=</span> <span class="vi">@user</span><span class="o">.</span><span class="n">name</span> <span class="cp">%&gt;</span>
+      <span class="nt">&lt;/h1&gt;</span>
+    <span class="nt">&lt;/section&gt;</span>
+  <span class="nt">&lt;/aside&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Styling<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+
+<span class="o">/*</span> <span class="nt">sidebar</span> <span class="o">*/</span>
+
+<span class="nt">aside</span> <span class="p">{</span>
+  <span class="nt">section</span> <span class="p">{</span>
+    <span class="na">padding</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="na">border-top</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="nv">$grayLighter</span><span class="p">;</span>
+    <span class="k">&amp;</span><span class="nd">:first-child</span> <span class="p">{</span>
+      <span class="na">border</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+      <span class="na">padding-top</span><span class="o">:</span> <span class="mi">0</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nt">span</span> <span class="p">{</span>
+      <span class="na">display</span><span class="o">:</span> <span class="no">block</span><span class="p">;</span>
+      <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">3</span><span class="kt">px</span><span class="p">;</span>
+      <span class="na">line-height</span><span class="o">:</span> <span class="mi">1</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="nt">h1</span> <span class="p">{</span>
+      <span class="na">font-size</span><span class="o">:</span> <span class="mi">1</span><span class="mf">.4</span><span class="kt">em</span><span class="p">;</span>
+      <span class="na">text-align</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+      <span class="na">letter-spacing</span><span class="o">:</span> <span class="mi">-1</span><span class="kt">px</span><span class="p">;</span>
+      <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">3</span><span class="kt">px</span><span class="p">;</span>
+      <span class="na">margin-top</span><span class="o">:</span> <span class="mi">0</span><span class="kt">px</span><span class="p">;</span>
+    <span class="p">}</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nc">.gravatar</span> <span class="p">{</span>
+  <span class="na">float</span><span class="o">:</span> <span class="no">left</span><span class="p">;</span>
+  <span class="na">margin-right</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Checkpoint<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_user_show_sidebar_css_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Sign up form mock up<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_signup_mockup_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Db reset<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="gp">$</span> bundle <span class="nb">exec </span>rake db:reset
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>user_pages_spec.rb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="nb">require</span> <span class="s1">'spec_helper'</span>
+
+<span class="n">describe</span> <span class="s2">"User pages"</span> <span class="k">do</span>
+
+  <span class="n">subject</span> <span class="p">{</span> <span class="n">page</span> <span class="p">}</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="n">describe</span> <span class="s2">"signup"</span> <span class="k">do</span>
+
+    <span class="n">before</span> <span class="p">{</span> <span class="n">visit</span> <span class="n">signup_path</span> <span class="p">}</span>
+
+    <span class="n">let</span><span class="p">(</span><span class="ss">:submit</span><span class="p">)</span> <span class="p">{</span> <span class="s2">"Create my account"</span> <span class="p">}</span>
+
+    <span class="n">describe</span> <span class="s2">"with invalid information"</span> <span class="k">do</span>
+      <span class="n">it</span> <span class="s2">"should not create a user"</span> <span class="k">do</span>
+        <span class="n">expect</span> <span class="p">{</span> <span class="n">click_button</span> <span class="n">submit</span> <span class="p">}</span><span class="o">.</span><span class="n">not_to</span> <span class="n">change</span><span class="p">(</span><span class="no">User</span><span class="p">,</span> <span class="ss">:count</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+
+    <span class="n">describe</span> <span class="s2">"with valid information"</span> <span class="k">do</span>
+      <span class="n">before</span> <span class="k">do</span>
+        <span class="n">fill_in</span> <span class="s2">"Name"</span><span class="p">,</span>         <span class="ss">with:</span> <span class="s2">"Example User"</span>
+        <span class="n">fill_in</span> <span class="s2">"Email"</span><span class="p">,</span>        <span class="ss">with:</span> <span class="s2">"user@example.com"</span>
+        <span class="n">fill_in</span> <span class="s2">"Password"</span><span class="p">,</span>     <span class="ss">with:</span> <span class="s2">"foobar"</span>
+        <span class="n">fill_in</span> <span class="s2">"Confirmation"</span><span class="p">,</span> <span class="ss">with:</span> <span class="s2">"foobar"</span>
+      <span class="k">end</span>
+
+      <span class="n">it</span> <span class="s2">"should create a user"</span> <span class="k">do</span>
+        <span class="n">expect</span> <span class="p">{</span> <span class="n">click_button</span> <span class="n">submit</span> <span class="p">}</span><span class="o">.</span><span class="n">to</span> <span class="n">change</span><span class="p">(</span><span class="no">User</span><span class="p">,</span> <span class="ss">:count</span><span class="p">)</span><span class="o">.</span><span class="n">by</span><span class="p">(</span><span class="mi">1</span><span class="p">)</span>
+      <span class="k">end</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Sign up form<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;%</span> <span class="n">provide</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="s1">'Sign up'</span><span class="p">)</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;h1&gt;</span>Sign up<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"span6 offset3"</span><span class="nt">&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">form_for</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:name</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_field</span> <span class="ss">:name</span> <span class="cp">%&gt;</span>
+
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:email</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">text_field</span> <span class="ss">:email</span> <span class="cp">%&gt;</span>
+
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:password</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">password_field</span> <span class="ss">:password</span> <span class="cp">%&gt;</span>
+
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">label</span> <span class="ss">:password_confirmation</span><span class="p">,</span> <span class="s2">"Confirmation"</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">password_field</span> <span class="ss">:password_confirmation</span> <span class="cp">%&gt;</span>
+
+      <span class="cp">&lt;%=</span> <span class="n">f</span><span class="o">.</span><span class="n">submit</span> <span class="s2">"Create my account"</span><span class="p">,</span> <span class="ss">class:</span> <span class="s2">"btn btn-large btn-primary"</span> <span class="cp">%&gt;</span>
+    <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Produces this<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="nt">&lt;form</span> <span class="na">accept-charset=</span><span class="s">"UTF-8"</span> <span class="na">action=</span><span class="s">"/users"</span> <span class="na">class=</span><span class="s">"new_user"</span>
+      <span class="na">id=</span><span class="s">"new_user"</span> <span class="na">method=</span><span class="s">"post"</span><span class="nt">&gt;</span>
+
+  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"user_name"</span><span class="nt">&gt;</span>Name<span class="nt">&lt;/label&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"user_name"</span> <span class="na">name=</span><span class="s">"user[name]"</span> <span class="na">size=</span><span class="s">"30"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"user_email"</span><span class="nt">&gt;</span>Email<span class="nt">&lt;/label&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"user_email"</span> <span class="na">name=</span><span class="s">"user[email]"</span> <span class="na">size=</span><span class="s">"30"</span> <span class="na">type=</span><span class="s">"text"</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"user_password"</span><span class="nt">&gt;</span>Password<span class="nt">&lt;/label&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"user_password"</span> <span class="na">name=</span><span class="s">"user[password]"</span> <span class="na">size=</span><span class="s">"30"</span>
+         <span class="na">type=</span><span class="s">"password"</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;label</span> <span class="na">for=</span><span class="s">"user_password_confirmation"</span><span class="nt">&gt;</span>Confirmation<span class="nt">&lt;/label&gt;</span>
+  <span class="nt">&lt;input</span> <span class="na">id=</span><span class="s">"user_password_confirmation"</span> 
+         <span class="na">name=</span><span class="s">"user[password_confirmation]"</span> <span class="na">size=</span><span class="s">"30"</span> <span class="na">type=</span><span class="s">"password"</span> <span class="nt">/&gt;</span>
+
+  <span class="nt">&lt;input</span> <span class="na">class=</span><span class="s">"btn btn-large btn-primary"</span> <span class="na">name=</span><span class="s">"commit"</span> <span class="na">type=</span><span class="s">"submit"</span> 
+         <span class="na">value=</span><span class="s">"Create my account"</span> <span class="nt">/&gt;</span>
+<span class="nt">&lt;/form&gt;</span> 
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>@user?<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="k">def</span> <span class="nf">new</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Styling<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+
+<span class="o">/*</span> <span class="nt">forms</span> <span class="o">*/</span>
+
+<span class="nt">input</span><span class="o">,</span> <span class="nt">textarea</span><span class="o">,</span> <span class="nt">select</span><span class="o">,</span> <span class="nc">.uneditable-input</span> <span class="p">{</span>
+  <span class="na">border</span><span class="o">:</span> <span class="mi">1</span><span class="kt">px</span> <span class="no">solid</span> <span class="mh">#bbb</span><span class="p">;</span>
+  <span class="na">width</span><span class="o">:</span> <span class="mi">100</span><span class="kt">%</span><span class="p">;</span>
+  <span class="na">padding</span><span class="o">:</span> <span class="mi">10</span><span class="kt">px</span><span class="p">;</span>
+  <span class="na">margin-bottom</span><span class="o">:</span> <span class="mi">15</span><span class="kt">px</span><span class="p">;</span>
+  <span class="k">@include</span><span class="nd"> box_sizing</span><span class="p">;</span>
+<span class="p">}</span>
+
+<span class="nt">input</span> <span class="p">{</span>
+  <span class="na">height</span><span class="o">:</span> <span class="no">auto</span> <span class="nv">!important</span><span class="p">;</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Checkpoint<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_signup_form_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Sign up failure<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_signup_failure_mockup_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>users_controller#create<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
+      <span class="c1"># Handle a successful save.</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="s1">'new'</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Data passed<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_signup_failure_rails_3_bootstrap_debug.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Debug shows it<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="nn">---</span>
+<span class="l-Scalar-Plain">user</span><span class="p-Indicator">:</span>
+  <span class="l-Scalar-Plain">name</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Foo Bar</span>
+  <span class="l-Scalar-Plain">password_confirmation</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">foo</span>
+  <span class="l-Scalar-Plain">password</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">bar</span>
+  <span class="l-Scalar-Plain">email</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">foo@invalid</span>
+<span class="l-Scalar-Plain">commit</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">Create my account</span>
+<span class="l-Scalar-Plain">action</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">create</span>
+<span class="l-Scalar-Plain">controller</span><span class="p-Indicator">:</span> <span class="l-Scalar-Plain">users</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Insert error messages<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;%</span> <span class="n">provide</span><span class="p">(</span><span class="ss">:title</span><span class="p">,</span> <span class="s1">'Sign up'</span><span class="p">)</span> <span class="cp">%&gt;</span>
+<span class="nt">&lt;h1&gt;</span>Sign up<span class="nt">&lt;/h1&gt;</span>
+
+<span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"row"</span><span class="nt">&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"span6 offset3"</span><span class="nt">&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">form_for</span><span class="p">(</span><span class="vi">@user</span><span class="p">)</span> <span class="k">do</span> <span class="o">|</span><span class="n">f</span><span class="o">|</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'shared/error_messages'</span> <span class="cp">%&gt;</span>
+      .
+      .
+      .
+    <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="nt">&lt;/div&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>shared/error_messages.html.erb<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;%</span> <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">any?</span> <span class="cp">%&gt;</span>
+  <span class="nt">&lt;div</span> <span class="na">id=</span><span class="s">"error_explanation"</span><span class="nt">&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"alert alert-error"</span><span class="nt">&gt;</span>
+      The form contains <span class="cp">&lt;%=</span> <span class="n">pluralize</span><span class="p">(</span><span class="vi">@user</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">count</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">)</span> <span class="cp">%&gt;</span>.
+    <span class="nt">&lt;/div&gt;</span>
+    <span class="nt">&lt;ul&gt;</span>
+    <span class="cp">&lt;%</span> <span class="vi">@user</span><span class="o">.</span><span class="n">errors</span><span class="o">.</span><span class="n">full_messages</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">msg</span><span class="o">|</span> <span class="cp">%&gt;</span>
+      <span class="nt">&lt;li&gt;</span>* <span class="cp">&lt;%=</span> <span class="n">msg</span> <span class="cp">%&gt;</span><span class="nt">&lt;/li&gt;</span>
+    <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;/ul&gt;</span>
+  <span class="nt">&lt;/div&gt;</span>
+<span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Pluralize :)<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="gp">&gt;&gt; </span><span class="kp">include</span> <span class="ss">ActionView::Helpers</span><span class="o">::</span><span class="no">TextHelper</span>
+<span class="gp">&gt;&gt; </span><span class="n">pluralize</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">)</span>
+<span class="go">=&gt; "1 error" </span>
+<span class="gp">&gt;&gt; </span><span class="n">pluralize</span><span class="p">(</span><span class="mi">5</span><span class="p">,</span> <span class="s2">"error"</span><span class="p">)</span>
+<span class="go">=&gt; "5 errors"</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Pluralize :)<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="gp">&gt;&gt; </span><span class="n">pluralize</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="s2">"woman"</span><span class="p">)</span>
+<span class="go">=&gt; "2 women"</span>
+<span class="gp">&gt;&gt; </span><span class="n">pluralize</span><span class="p">(</span><span class="mi">3</span><span class="p">,</span> <span class="s2">"erratum"</span><span class="p">)</span>
+<span class="go">=&gt; "3 errata"</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Error styles<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+
+<span class="o">/*</span> <span class="nt">forms</span> <span class="o">*/</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nc">.</span>
+<span class="nn">#error_explanation</span> <span class="p">{</span>
+  <span class="na">color</span><span class="o">:</span> <span class="mh">#f00</span><span class="p">;</span>
+  <span class="nt">ul</span> <span class="p">{</span>
+    <span class="na">list-style</span><span class="o">:</span> <span class="no">none</span><span class="p">;</span>
+    <span class="na">margin</span><span class="o">:</span> <span class="mi">0</span> <span class="mi">0</span> <span class="mi">18</span><span class="kt">px</span> <span class="mi">0</span><span class="p">;</span>
+  <span class="p">}</span>
+<span class="p">}</span>
+
+<span class="nc">.field_with_errors</span> <span class="p">{</span>
+  <span class="k">@extend</span> <span class="nc">.control-group</span><span class="o">;</span>
+  <span class="o">@</span><span class="nt">extend</span> <span class="nc">.error</span><span class="o">;</span>
+ <span class="p">}</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Checkpoint<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_blank_signup_password_digest_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>What about success?<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_signup_success_mockup_bootstrap.png">
+</div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>User creation<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
+      <span class="n">redirect_to</span> <span class="vi">@user</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="s1">'new'</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Controller variables<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><ul><li>params</li><li>request</li><li>flash</li><li>session</li></ul></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Message for redirect<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="k">class</span> <span class="nc">UsersController</span> <span class="o">&lt;</span> <span class="no">ApplicationController</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="o">.</span>
+  <span class="k">def</span> <span class="nf">create</span>
+    <span class="vi">@user</span> <span class="o">=</span> <span class="no">User</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">params</span><span class="o">[</span><span class="ss">:user</span><span class="o">]</span><span class="p">)</span>
+    <span class="k">if</span> <span class="vi">@user</span><span class="o">.</span><span class="n">save</span>
+      <span class="n">flash</span><span class="o">[</span><span class="ss">:success</span><span class="o">]</span> <span class="o">=</span> <span class="s2">"Welcome to the Sample App!"</span>
+      <span class="n">redirect_to</span> <span class="vi">@user</span>
+    <span class="k">else</span>
+      <span class="n">render</span> <span class="s1">'new'</span>
+    <span class="k">end</span>
+  <span class="k">end</span>
+<span class="k">end</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>Flash shows up<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><pre><span class="cp">&lt;!DOCTYPE html&gt;</span>
+<span class="nt">&lt;html&gt;</span>
+  .
+  .
+  .
+  <span class="nt">&lt;body&gt;</span>
+    <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/header'</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"container"</span><span class="nt">&gt;</span>
+      <span class="cp">&lt;%</span> <span class="n">flash</span><span class="o">.</span><span class="n">each</span> <span class="k">do</span> <span class="o">|</span><span class="n">key</span><span class="p">,</span> <span class="n">value</span><span class="o">|</span> <span class="cp">%&gt;</span>
+        <span class="nt">&lt;div</span> <span class="na">class=</span><span class="s">"alert alert-</span><span class="cp">&lt;%=</span> <span class="n">key</span> <span class="cp">%&gt;</span><span class="s">"</span><span class="nt">&gt;</span><span class="cp">&lt;%=</span> <span class="n">value</span> <span class="cp">%&gt;</span><span class="nt">&lt;/div&gt;</span>
+      <span class="cp">&lt;%</span> <span class="k">end</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="k">yield</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">render</span> <span class="s1">'layouts/footer'</span> <span class="cp">%&gt;</span>
+      <span class="cp">&lt;%=</span> <span class="n">debug</span><span class="p">(</span><span class="n">params</span><span class="p">)</span> <span class="k">if</span> <span class="no">Rails</span><span class="o">.</span><span class="n">env</span><span class="o">.</span><span class="n">development?</span> <span class="cp">%&gt;</span>
+    <span class="nt">&lt;/div&gt;</span>
+    .
+    .
+    .
+  <span class="nt">&lt;/body&gt;</span>
+<span class="nt">&lt;/html&gt;</span>
+</pre></div>
+</div>
+
+
+
+<!-- Slide content for chapter http://ruby.railstutorial.org/chapters/sign-up -->
+<div class="slide">
+
+<h1>First sign up<span style='float:right; font-size:0.5em'> chapter 7</span></h1>
+
+<div><img src="images/6_signup_flash_bootstrap.png">
+</div>
+</div>
+
+
+
+
+
+</body>
+</html>
